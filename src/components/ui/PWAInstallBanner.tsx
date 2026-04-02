@@ -78,17 +78,26 @@ export function PWAInstallBanner() {
 
   const ios = isIOS();
 
+  // Only show on mobile (< 768px)
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   return (
     <AnimatePresence>
-      {visible && (
+      {visible && isMobile && (
         <motion.div
-          initial={{ y: -120, opacity: 0 }}
+          initial={{ y: -140, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -120, opacity: 0 }}
+          exit={{ y: -140, opacity: 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 28 }}
-          className="fixed top-4 left-4 right-4 z-50 mx-auto max-w-md"
+          className="fixed top-0 left-0 right-0 z-[100] px-3 pt-[calc(env(safe-area-inset-top)+8px)]"
         >
-          <div className="bg-white rounded-2xl shadow-xl p-4 flex items-start gap-4">
+          <div className="bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.15)] p-4 flex items-start gap-3 mx-auto max-w-md">
             {/* Mascot */}
             <div className="shrink-0 pt-1">
               <Mascot size={56} expression="waving" />
