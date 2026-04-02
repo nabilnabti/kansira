@@ -1,9 +1,9 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Flame, BookOpen, Star, TrendingUp, Edit2 } from 'lucide-react'
+import { Flame, BookOpen, Star, TrendingUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
 
-// Fresh user stats
 const mockStats = {
   totalXP: 0,
   level: 1,
@@ -11,113 +11,158 @@ const mockStats = {
   lessonsCompleted: 0,
 }
 
-function StatCard({ icon: Icon, label, value, color }: {
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+}
+
+function StatCard({
+  icon: Icon,
+  label,
+  value,
+  bgColor,
+  index,
+}: {
   icon: React.ElementType
   label: string
   value: string | number
-  color: string
+  bgColor: string
+  index: number
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex items-center gap-3"
+      variants={fadeUp}
+      className={`${bgColor} rounded-2xl p-4 flex flex-col items-center justify-center text-center min-h-[100px] shadow-sm`}
     >
-      <div className={`p-2.5 rounded-xl ${color}`}>
-        <Icon size={20} className="text-white" />
-      </div>
-      <div>
-        <p className="text-lg font-bold text-dark">{value}</p>
-        <p className="text-xs text-gray-500">{label}</p>
-      </div>
+      <Icon size={22} className="text-white/90 mb-1.5" />
+      <p className="text-2xl font-extrabold text-white">{value}</p>
+      <p className="text-[11px] font-medium text-white/70 mt-0.5">{label}</p>
     </motion.div>
   )
 }
 
 export default function ProfilePage() {
-  const { languageLabel } = useLanguage()
+  const { languageLabel, activeLanguage } = useLanguage()
   const { profile } = useAuth()
   const displayName = profile?.display_name || 'Utilisateur'
-  const email = profile?.id ? `${displayName.toLowerCase().replace(' ', '.')}@email.com` : 'email@example.com'
+  const email = profile?.id
+    ? `${displayName.toLowerCase().replace(' ', '.')}@email.com`
+    : 'email@example.com'
   const initials = displayName
     .split(' ')
-    .map((w) => w[0])
+    .map((w: string) => w[0])
     .join('')
     .toUpperCase()
 
+  const langEmoji = activeLanguage === 'bm' ? '\uD83C\uDDF2\uD83C\uDDF1' : '\uD83C\uDDF2\uD83C\uDDF1'
+
   return (
-    <div className="max-w-lg mx-auto pb-28 md:pb-8">
+    <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
+      {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-6"
       >
-        <h1 className="text-2xl font-bold text-dark">Profil</h1>
+        <h1 className="text-2xl font-bold text-[#131516]">Profil</h1>
       </motion.div>
 
       {/* Avatar + info */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6"
+        transition={{ delay: 0.1 }}
+        className="flex flex-col items-center mb-8"
       >
-        <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-white text-xl font-bold shrink-0">
+        {/* Avatar with gradient border */}
+        <div className="rounded-full p-[3px] bg-gradient-to-br from-[#FF6B00] via-[#F4A100] to-[#2D9F4F] mb-4">
+          <div className="w-20 h-20 rounded-full bg-[#FF6B00] flex items-center justify-center text-white text-2xl font-extrabold ring-4 ring-white">
             {initials}
           </div>
-          <div className="flex-1 min-w-0">
-            <h2 className="font-bold text-lg text-dark truncate">{displayName}</h2>
-            <p className="text-sm text-gray-500 truncate">{email}</p>
-            <p className="text-xs text-primary font-medium mt-1">
-              {languageLabel}
-            </p>
-          </div>
-          <button className="p-2 rounded-xl hover:bg-gray-100 transition-colors text-gray-400">
-            <Edit2 size={18} />
-          </button>
         </div>
+
+        <h2 className="font-bold text-xl text-[#131516]">{displayName}</h2>
+        <p className="text-sm text-[#131516]/50 mt-0.5">{email}</p>
+
+        {/* Language pill */}
+        <motion.span
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.25 }}
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#2D9F4F]/10 px-4 py-1.5 text-sm font-semibold text-[#2D9F4F]"
+        >
+          {langEmoji} {languageLabel}
+        </motion.span>
       </motion.div>
 
       {/* Stats grid */}
-      <div className="grid grid-cols-2 gap-3">
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-2 gap-3 mb-8"
+      >
         <StatCard
           icon={Star}
           label="XP total"
           value={mockStats.totalXP.toLocaleString()}
-          color="bg-primary"
+          bgColor="bg-[#FF6B00]"
+          index={0}
         />
         <StatCard
           icon={TrendingUp}
           label="Niveau"
           value={mockStats.level}
-          color="bg-secondary"
+          bgColor="bg-[#2D9F4F]"
+          index={1}
         />
         <StatCard
           icon={Flame}
-          label="Serie"
-          value={`${mockStats.streak} jours`}
-          color="bg-gold"
+          label="S\u00e9rie (jours)"
+          value={mockStats.streak}
+          bgColor="bg-[#F4A100]"
+          index={2}
         />
         <StatCard
           icon={BookOpen}
-          label="Lecons terminees"
+          label="Le\u00e7ons termin\u00e9es"
           value={mockStats.lessonsCompleted}
-          color="bg-dark"
+          bgColor="bg-[#131516]"
+          index={3}
         />
-      </div>
+      </motion.div>
 
       {/* Edit button */}
       <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
         whileTap={{ scale: 0.97 }}
-        onClick={() => alert('Fonctionnalité bientôt disponible ! (démo)')}
-        className="mt-6 w-full py-3 bg-primary text-white font-semibold rounded-xl hover:bg-primary-dark transition-colors"
+        onClick={() => alert('Fonctionnalit\u00e9 bient\u00f4t disponible ! (d\u00e9mo)')}
+        className="w-full h-14 bg-[#FF6B00] text-white font-bold text-base rounded-2xl shadow-lg shadow-[#FF6B00]/25 active:bg-[#e55f00] transition-colors"
       >
         Modifier le profil
       </motion.button>
 
+      {/* Admin link */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
+        className="mt-4 text-center"
+      >
+        <Link
+          to="/admin"
+          className="text-sm font-medium text-[#131516]/40 transition-colors active:text-[#131516]/60"
+        >
+          Panneau admin &rarr;
+        </Link>
+      </motion.div>
     </div>
   )
 }

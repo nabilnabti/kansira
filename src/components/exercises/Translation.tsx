@@ -45,16 +45,16 @@ export function Translation({
 
   return (
     <div className="flex flex-col gap-6 w-full">
-      {/* Prompt */}
+      {/* Prompt card */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center"
+        className="rounded-2xl bg-primary/8 border border-primary/15 px-5 py-5 text-center"
       >
-        <p className="text-sm text-dark/50 mb-1">
+        <p className="text-sm text-dark/45 mb-1.5 font-medium">
           Traduire en {data.target_lang}
         </p>
-        <h2 className="text-xl font-heading font-bold text-dark">
+        <h2 className="text-2xl font-heading font-bold text-dark leading-snug">
           {data.prompt}
         </h2>
       </motion.div>
@@ -66,15 +66,15 @@ export function Translation({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15 }}
-            className="min-h-[64px] px-4 py-3 rounded-2xl border-2 border-dashed border-dark/15 bg-white flex flex-wrap gap-2 items-center"
+            className="min-h-[80px] px-4 py-4 rounded-2xl border-2 border-dashed border-dark/12 bg-white flex flex-wrap gap-2.5 items-start content-start"
           >
             <AnimatePresence mode="popLayout">
               {selectedWords.length === 0 && (
                 <motion.span
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: 0.4 }}
+                  animate={{ opacity: 0.35 }}
                   exit={{ opacity: 0 }}
-                  className="text-dark/40 text-sm"
+                  className="text-dark/35 text-base italic"
                 >
                   Tapez les mots pour former la phrase...
                 </motion.span>
@@ -87,11 +87,11 @@ export function Translation({
                   initial={{ scale: 0.5, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.5, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                  whileTap={{ scale: 0.9 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+                  whileTap={{ scale: 0.88 }}
                   onClick={() => removeWord(word, idx)}
                   disabled={disabled}
-                  className="px-4 py-2 bg-primary/10 border border-primary/30 rounded-xl text-primary font-medium text-sm cursor-pointer disabled:cursor-not-allowed"
+                  className="px-4 py-2.5 bg-primary text-white rounded-xl font-semibold text-sm cursor-pointer disabled:cursor-not-allowed min-h-[44px] shadow-sm"
                 >
                   {word}
                 </motion.button>
@@ -104,7 +104,7 @@ export function Translation({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25 }}
-            className="flex flex-wrap gap-2 justify-center"
+            className="flex flex-wrap gap-2.5 justify-center"
           >
             <AnimatePresence mode="popLayout">
               {availableWords.map((word, idx) => (
@@ -114,12 +114,12 @@ export function Translation({
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0.8, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
-                  whileHover={disabled ? undefined : { scale: 1.05 }}
-                  whileTap={disabled ? undefined : { scale: 0.92 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+                  whileHover={disabled ? undefined : { scale: 1.06 }}
+                  whileTap={disabled ? undefined : { scale: 0.9 }}
                   onClick={() => addWord(word, idx)}
                   disabled={disabled}
-                  className="px-4 py-2.5 bg-white border-2 border-dark/10 rounded-xl text-dark font-medium text-sm cursor-pointer hover:border-primary/40 disabled:cursor-not-allowed min-h-[44px]"
+                  className="px-5 py-3 bg-white border-2 border-dark/10 rounded-2xl text-dark font-semibold text-base cursor-pointer hover:border-primary/40 hover:bg-primary/5 disabled:cursor-not-allowed min-h-[48px] shadow-sm transition-colors"
                 >
                   {word}
                 </motion.button>
@@ -140,7 +140,7 @@ export function Translation({
             onChange={(e) => handleTextChange(e.target.value)}
             disabled={disabled}
             placeholder="Tapez votre traduction..."
-            className="w-full px-5 py-4 rounded-2xl border-2 border-dark/10 bg-white text-dark text-base font-medium placeholder:text-dark/30 focus:border-primary focus:outline-none disabled:opacity-50 min-h-[56px]"
+            className="w-full px-5 py-4 rounded-2xl border-2 border-dark/10 bg-white text-dark text-lg font-medium placeholder:text-dark/30 focus:border-primary focus:outline-none disabled:opacity-50 min-h-[56px]"
           />
         </motion.div>
       )}

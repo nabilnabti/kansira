@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Mascot } from "../ui/Mascot";
 
 const navLinks = [
   { label: "Fonctionnalités", href: "#features" },
@@ -43,8 +44,9 @@ export default function Navbar() {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="font-heading text-xl font-bold text-primary"
+            className="flex items-center gap-2 font-heading text-xl font-bold text-primary"
           >
+            <Mascot size={36} expression="happy" />
             Kan Sira
           </a>
 

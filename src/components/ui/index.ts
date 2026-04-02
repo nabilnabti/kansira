@@ -8,3 +8,5 @@ export { ToastProvider, useToast } from "./Toast";
 export { Badge } from "./Badge";
 export { Avatar } from "./Avatar";
 export { Toggle } from "./Toggle";
+export { Mascot } from "./Mascot";
+export { PWAInstallBanner } from "./PWAInstallBanner";

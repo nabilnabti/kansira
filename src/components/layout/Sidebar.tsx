@@ -1,7 +1,8 @@
 import { NavLink } from 'react-router-dom'
-import { Home, User, Award, Settings, ChevronDown, Shield, Crown } from 'lucide-react'
+import { Home, User, Award, Settings, ChevronDown, Crown } from 'lucide-react'
 import { useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
+import { Mascot } from '../ui/Mascot'
 import StreakDisplay from '../app/StreakDisplay'
 import XPBar from '../app/XPBar'
 
@@ -10,8 +11,7 @@ const navItems = [
   { to: '/app/profile', label: 'Profil', icon: User },
   { to: '/app/badges', label: 'Badges', icon: Award },
   { to: '/app/premium', label: 'Premium', icon: Crown },
-  { to: '/app/settings', label: 'Paramètres', icon: Settings },
-  { to: '/admin', label: 'Admin', icon: Shield },
+  { to: '/app/settings', label: 'Parametres', icon: Settings },
 ]
 
 const languageOptions = [
@@ -28,7 +28,8 @@ export default function Sidebar() {
   return (
     <aside className="hidden md:flex flex-col fixed left-0 top-0 bottom-0 w-[260px] bg-white border-r border-gray-100 z-40">
       {/* Logo */}
-      <div className="px-6 pt-6 pb-4">
+      <div className="px-6 pt-6 pb-4 flex items-center gap-2">
+        <Mascot size={40} expression="happy" />
         <h1 className="text-primary font-bold text-xl tracking-tight">Kan Sira</h1>
       </div>
 

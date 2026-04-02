@@ -3,6 +3,8 @@ import { motion } from 'framer-motion'
 import type { FillBlankData } from '../../types/database'
 import type { ExerciseProps } from './MultipleChoice'
 
+const letters = ['A', 'B', 'C', 'D', 'E', 'F']
+
 export function FillBlank({
   data,
   onAnswer,
@@ -29,17 +31,17 @@ export function FillBlank({
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center px-4"
+        className="text-center px-2"
       >
-        <p className="text-sm text-dark/50 mb-3">Complétez la phrase</p>
-        <p className="text-xl font-heading font-bold text-dark leading-relaxed">
+        <p className="text-sm text-dark/45 mb-4 font-medium">Completez la phrase</p>
+        <p className="text-2xl font-heading font-bold text-dark leading-relaxed">
           {beforeBlank}{' '}
           <motion.span
             layout
-            className={`inline-block min-w-[80px] px-3 py-1 mx-1 rounded-xl border-b-[3px] text-center ${
+            className={`inline-block min-w-[90px] px-3 py-1.5 mx-1 border-b-[3px] text-center transition-all duration-200 ${
               filledWord
-                ? 'border-primary bg-primary/10 text-primary'
-                : 'border-dark/20 bg-dark/5 text-dark/30'
+                ? 'border-primary text-primary bg-primary/10 rounded-xl'
+                : 'border-primary/40 text-dark/30 border-dashed'
             }`}
           >
             {filledWord ?? '______'}
@@ -48,8 +50,8 @@ export function FillBlank({
         </p>
       </motion.div>
 
-      {/* Options */}
-      <div className="flex flex-wrap gap-3 justify-center">
+      {/* Options — same style as MultipleChoice */}
+      <div className="grid grid-cols-1 gap-3">
         {data.options.map((option, index) => {
           const isSelected = selectedIndex === index
 
@@ -64,22 +66,36 @@ export function FillBlank({
                 damping: 25,
                 delay: 0.2 + index * 0.08,
               }}
-              whileHover={disabled ? undefined : { scale: 1.05 }}
-              whileTap={disabled ? undefined : { scale: 0.93 }}
+              whileHover={disabled ? undefined : { scale: 1.02 }}
+              whileTap={disabled ? undefined : { scale: 0.96 }}
               onClick={() => handleSelect(index)}
               disabled={disabled}
               className={`
-                px-6 py-3.5 rounded-2xl font-medium text-base
-                border-2 transition-colors duration-150 cursor-pointer
-                disabled:cursor-not-allowed min-h-[52px]
+                w-full min-h-[60px] px-5 py-4 rounded-2xl text-left font-semibold text-base
+                border-2 transition-all duration-150 cursor-pointer
+                disabled:cursor-not-allowed
                 ${
                   isSelected
-                    ? 'border-primary bg-primary/10 text-primary'
-                    : 'border-dark/10 bg-white text-dark hover:border-dark/25'
+                    ? 'border-primary bg-primary text-white shadow-md shadow-primary/20'
+                    : 'border-dark/10 bg-white text-dark hover:border-primary/30 hover:bg-primary/5'
                 }
               `}
             >
-              {option}
+              <div className="flex items-center gap-3.5">
+                <span
+                  className={`
+                    w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 transition-all duration-150
+                    ${
+                      isSelected
+                        ? 'bg-white/25 text-white'
+                        : 'bg-primary/10 text-primary'
+                    }
+                  `}
+                >
+                  {letters[index]}
+                </span>
+                <span className="leading-snug">{option}</span>
+              </div>
             </motion.button>
           )
         })}

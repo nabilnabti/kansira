@@ -6,6 +6,7 @@ import type { Exercise, ExerciseData } from '../../types/database'
 import { useExercise } from '../../hooks/useExercise'
 import { validators } from '../../lib/exercise-engine/validator'
 import { ProgressBar } from '../ui/ProgressBar'
+import { Mascot } from '../ui/Mascot'
 import { ExerciseRouter } from './ExerciseRouter'
 import { FeedbackOverlay } from './FeedbackOverlay'
 import { LessonComplete } from './LessonComplete'
@@ -82,28 +83,71 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
   // Intro state
   if (state === 'intro') {
     return (
-      <div className="fixed inset-0 bg-background flex flex-col items-center justify-center px-6 z-50">
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center px-6 pt-safe pb-safe overflow-hidden">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FF6B00]/10 via-background to-background" />
+        {/* Decorative circles */}
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="absolute top-[10%] right-[-20%] w-[300px] h-[300px] rounded-full bg-primary/5"
+        />
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+          className="absolute bottom-[15%] left-[-15%] w-[250px] h-[250px] rounded-full bg-secondary/5"
+        />
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center"
+          className="relative text-center z-10"
         >
-          <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-4xl">📚</span>
-          </div>
-          <h1 className="text-2xl font-heading font-bold text-dark mb-2">
-            Prêt à apprendre ?
-          </h1>
-          <p className="text-dark/60 mb-8">
-            {totalExercises} exercices dans cette leçon
-          </p>
-          <motion.button
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            onClick={startLesson}
-            className="px-10 py-4 rounded-xl bg-primary text-white font-bold text-lg cursor-pointer"
+          {/* Mascot with bounce */}
+          <motion.div
+            animate={{
+              y: [0, -12, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              repeatType: 'loop',
+              ease: 'easeInOut',
+            }}
+            className="mx-auto mb-6"
           >
-            Commencer
+            <Mascot size={120} expression="excited" />
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="text-3xl font-heading font-bold text-dark mb-2"
+          >
+            Pret a apprendre ?
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.35 }}
+            className="text-dark/50 text-lg mb-10"
+          >
+            {totalExercises} exercices
+          </motion.p>
+
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.93 }}
+            onClick={startLesson}
+            className="px-14 py-5 rounded-2xl bg-primary text-white font-bold text-xl cursor-pointer shadow-lg shadow-primary/30"
+          >
+            C'est parti !
           </motion.button>
         </motion.div>
       </div>
@@ -125,20 +169,22 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
   return (
     <div className="fixed inset-0 bg-background flex flex-col z-50">
       {/* Top bar */}
-      <div className="flex items-center gap-3 px-4 pt-4 pb-2 safe-top">
-        <motion.button
-          whileTap={{ scale: 0.9 }}
-          onClick={handleClose}
-          className="w-10 h-10 rounded-full bg-dark/5 flex items-center justify-center cursor-pointer shrink-0"
-        >
-          <X className="w-5 h-5 text-dark/60" />
-        </motion.button>
-        <div className="flex-1">
-          <ProgressBar value={progress} color="primary" size="sm" />
+      <div className="flex items-center gap-3 px-4 pt-safe pb-2">
+        <div className="pt-3 flex items-center gap-3 w-full">
+          <motion.button
+            whileTap={{ scale: 0.85 }}
+            onClick={handleClose}
+            className="w-11 h-11 rounded-full bg-dark/5 flex items-center justify-center cursor-pointer shrink-0"
+          >
+            <X className="w-5 h-5 text-dark/50" />
+          </motion.button>
+          <div className="flex-1">
+            <ProgressBar value={progress} color="primary" size="md" />
+          </div>
+          <span className="text-sm text-dark/50 font-bold shrink-0 tabular-nums">
+            {exerciseIndex + 1}/{totalExercises}
+          </span>
         </div>
-        <span className="text-sm text-dark/50 font-medium shrink-0">
-          {exerciseIndex + 1}/{totalExercises}
-        </span>
       </div>
 
       {/* Exercise content */}
@@ -147,10 +193,10 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
           {currentExercise && (
             <motion.div
               key={currentExercise.id}
-              initial={{ opacity: 0, x: 40 }}
+              initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ type: 'spring', stiffness: 350, damping: 30 }}
             >
               <ExerciseRouter
                 data={currentExercise.data}
@@ -164,26 +210,29 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
 
       {/* Bottom check button */}
       {state === 'exercise' && (
-        <div className="px-5 pb-6 pt-3 safe-bottom">
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={hasAnswered ? { scale: 1.02 } : undefined}
-            whileTap={hasAnswered ? { scale: 0.97 } : undefined}
-            onClick={handleCheck}
-            disabled={!hasAnswered}
-            className={`
-              w-full py-4 rounded-xl font-bold text-lg cursor-pointer transition-colors
-              disabled:cursor-not-allowed
-              ${
-                hasAnswered
-                  ? 'bg-primary text-white'
-                  : 'bg-dark/10 text-dark/30'
-              }
-            `}
-          >
-            Vérifier
-          </motion.button>
+        <div className="px-5 pb-safe">
+          <div className="pb-5 pt-3">
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+              whileHover={hasAnswered ? { scale: 1.02 } : undefined}
+              whileTap={hasAnswered ? { scale: 0.95 } : undefined}
+              onClick={handleCheck}
+              disabled={!hasAnswered}
+              className={`
+                w-full py-4.5 rounded-2xl font-bold text-lg cursor-pointer transition-all duration-200
+                disabled:cursor-not-allowed min-h-[56px]
+                ${
+                  hasAnswered
+                    ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                    : 'bg-dark/8 text-dark/25'
+                }
+              `}
+            >
+              Verifier
+            </motion.button>
+          </div>
         </div>
       )}
 

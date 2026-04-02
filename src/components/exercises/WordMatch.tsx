@@ -16,6 +16,7 @@ export function WordMatch({
   const [selectedLeft, setSelectedLeft] = useState<string | null>(null)
   const [matchedPairs, setMatchedPairs] = useState<MatchedPair[]>([])
   const [shakingRight, setShakingRight] = useState<string | null>(null)
+  const [flashingRight, setFlashingRight] = useState<string | null>(null)
 
   // Shuffle right column once (stable via data reference)
   const [shuffledRight] = useState(() =>
@@ -51,25 +52,39 @@ export function WordMatch({
           onAnswer(newMatched)
         }
       } else {
-        // Wrong match - shake
+        // Wrong match — red flash + shake
         setShakingRight(right)
-        setTimeout(() => setShakingRight(null), 500)
+        setFlashingRight(right)
+        setTimeout(() => {
+          setShakingRight(null)
+          setFlashingRight(null)
+        }, 600)
       }
     },
     [disabled, selectedLeft, matchedPairs, data.pairs, onAnswer]
   )
 
   return (
-    <div className="flex flex-col gap-6 w-full">
+    <div className="flex flex-col gap-5 w-full">
       <motion.h2
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-lg font-heading font-bold text-dark text-center"
+        className="text-2xl font-heading font-bold text-dark text-center"
       >
         Associer les paires
       </motion.h2>
 
-      <div className="flex gap-4">
+      {/* Column headers */}
+      <div className="flex gap-3">
+        <div className="flex-1 text-center">
+          <span className="text-xs font-bold text-primary/70 uppercase tracking-wider">Bambara</span>
+        </div>
+        <div className="flex-1 text-center">
+          <span className="text-xs font-bold text-secondary/70 uppercase tracking-wider">Francais</span>
+        </div>
+      </div>
+
+      <div className="flex gap-3">
         {/* Left column */}
         <div className="flex-1 flex flex-col gap-3">
           {data.pairs.map((pair, index) => {
@@ -91,15 +106,15 @@ export function WordMatch({
                 onClick={() => handleLeftTap(pair.left)}
                 disabled={disabled || matched}
                 className={`
-                  min-h-[52px] px-4 py-3 rounded-2xl text-sm font-medium text-center
-                  border-2 transition-all duration-150 cursor-pointer
+                  min-h-[56px] px-4 py-3.5 rounded-2xl text-sm font-semibold text-center
+                  border-2 transition-all duration-200 cursor-pointer
                   disabled:cursor-not-allowed
                   ${
                     matched
-                      ? 'bg-secondary/10 border-secondary/30 text-secondary opacity-70'
+                      ? 'bg-secondary/10 border-secondary text-secondary'
                       : isActive
-                        ? 'bg-primary/10 border-primary text-primary shadow-sm'
-                        : 'bg-white border-dark/10 text-dark hover:border-dark/25'
+                        ? 'bg-primary text-white border-primary shadow-md shadow-primary/20'
+                        : 'bg-white border-dark/10 text-dark hover:border-primary/30'
                   }
                 `}
               >
@@ -114,6 +129,7 @@ export function WordMatch({
           {shuffledRight.map((right, index) => {
             const matched = isRightMatched(right)
             const isShaking = shakingRight === right
+            const isFlashing = flashingRight === right
 
             return (
               <motion.button
@@ -121,7 +137,7 @@ export function WordMatch({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{
                   opacity: 1,
-                  x: isShaking ? [0, -8, 8, -6, 6, -3, 3, 0] : 0,
+                  x: isShaking ? [0, -10, 10, -8, 8, -4, 4, 0] : 0,
                 }}
                 transition={
                   isShaking
@@ -137,15 +153,15 @@ export function WordMatch({
                 onClick={() => handleRightTap(right)}
                 disabled={disabled || matched}
                 className={`
-                  min-h-[52px] px-4 py-3 rounded-2xl text-sm font-medium text-center
-                  border-2 transition-all duration-150 cursor-pointer
+                  min-h-[56px] px-4 py-3.5 rounded-2xl text-sm font-semibold text-center
+                  border-2 transition-all duration-200 cursor-pointer
                   disabled:cursor-not-allowed
                   ${
                     matched
-                      ? 'bg-secondary/10 border-secondary/30 text-secondary opacity-70'
-                      : isShaking
-                        ? 'bg-accent/10 border-accent text-accent'
-                        : 'bg-white border-dark/10 text-dark hover:border-dark/25'
+                      ? 'bg-secondary/10 border-secondary text-secondary'
+                      : isFlashing
+                        ? 'bg-accent/15 border-accent text-accent'
+                        : 'bg-white border-dark/10 text-dark hover:border-secondary/30'
                   }
                 `}
               >

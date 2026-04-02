@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Trophy } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { Mascot } from '../ui/Mascot'
 
 interface LessonCompleteProps {
   score: number
@@ -73,11 +74,11 @@ export function LessonComplete({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 z-50 bg-background flex flex-col items-center justify-center px-6 overflow-hidden"
+      className="fixed inset-0 z-50 bg-background flex flex-col items-center justify-center px-6 pt-safe pb-safe overflow-hidden"
     >
-      {/* Confetti for perfect scores */}
-      {isPerfect &&
-        Array.from({ length: 40 }).map((_, i) => (
+      {/* Confetti for good scores */}
+      {score >= 70 &&
+        Array.from({ length: isPerfect ? 50 : 30 }).map((_, i) => (
           <ConfettiParticle key={i} index={i} />
         ))}
 
@@ -86,10 +87,16 @@ export function LessonComplete({
         initial={{ scale: 0, rotate: -30 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: 'spring', stiffness: 300, damping: 15, delay: 0.2 }}
-        className="mb-6"
+        className="mb-4"
       >
-        <div className="w-24 h-24 bg-gold/20 rounded-full flex items-center justify-center">
-          <Trophy className="w-12 h-12 text-gold" />
+        <div className="w-28 h-28 bg-gold/20 rounded-full flex items-center justify-center relative">
+          <Trophy className="w-14 h-14 text-gold" />
+          {/* Gold glow */}
+          <motion.div
+            animate={{ opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute inset-0 rounded-full bg-gold/10 blur-xl"
+          />
         </div>
       </motion.div>
 
@@ -98,17 +105,17 @@ export function LessonComplete({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-2xl font-heading font-bold text-dark mb-2"
+        className="text-3xl font-heading font-bold text-dark mb-1"
       >
-        Leçon terminée !
+        Lecon terminee !
       </motion.h1>
 
-      {/* Score circle */}
+      {/* Score circle - bigger on mobile */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.6 }}
-        className="relative w-32 h-32 mb-6"
+        className="relative w-40 h-40 mb-5"
       >
         <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
           <circle
@@ -118,7 +125,7 @@ export function LessonComplete({
             fill="none"
             stroke="currentColor"
             strokeWidth="8"
-            className="text-dark/10"
+            className="text-dark/8"
           />
           <motion.circle
             cx="50"
@@ -138,44 +145,64 @@ export function LessonComplete({
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-3xl font-heading font-bold text-dark">
+          <span className="text-4xl font-heading font-bold text-dark">
             <AnimatedCounter target={score} />
-            <span className="text-lg">%</span>
+            <span className="text-xl">%</span>
           </span>
         </div>
       </motion.div>
 
-      {/* Stars */}
+      {/* Stars with gold glow */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}
-        className="flex gap-2 mb-6"
+        className="flex gap-3 mb-5"
       >
         {[1, 2, 3].map((starIndex) => (
           <motion.div
             key={starIndex}
             initial={{ scale: 0, rotate: -180 }}
             animate={{
-              scale: starIndex <= stars ? 1 : 0.7,
+              scale: starIndex <= stars ? 1 : 0.6,
               rotate: 0,
             }}
             transition={{
               type: 'spring',
               stiffness: 400,
-              damping: 15,
-              delay: 1 + starIndex * 0.15,
+              damping: 12,
+              delay: 1 + starIndex * 0.2,
             }}
+            className="relative"
           >
+            {starIndex <= stars && (
+              <motion.div
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 1.5, repeat: Infinity, delay: starIndex * 0.2 }}
+                className="absolute inset-[-8px] rounded-full bg-gold/20 blur-md"
+              />
+            )}
             <Star
-              className={`w-10 h-10 ${
+              className={`w-12 h-12 relative z-10 ${
                 starIndex <= stars
-                  ? 'text-gold fill-gold'
-                  : 'text-dark/20'
+                  ? 'text-gold fill-gold drop-shadow-lg'
+                  : 'text-dark/15'
               }`}
             />
           </motion.div>
         ))}
+      </motion.div>
+
+      {/* XP counter — very prominent */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20, delay: 1.2 }}
+        className="bg-primary/10 border-2 border-primary/20 rounded-2xl px-8 py-4 mb-5"
+      >
+        <div className="text-3xl font-bold text-primary text-center">
+          +<AnimatedCounter target={xpEarned} /> XP
+        </div>
       </motion.div>
 
       {/* Stats */}
@@ -186,28 +213,35 @@ export function LessonComplete({
         className="flex gap-8 mb-8"
       >
         <div className="text-center">
-          <div className="text-2xl font-bold text-primary">
-            <AnimatedCounter target={xpEarned} />
-          </div>
-          <div className="text-sm text-dark/60">XP gagnés</div>
-        </div>
-        <div className="text-center">
           <div className="text-2xl font-bold text-secondary">
             {correctCount}/{totalExercises}
           </div>
-          <div className="text-sm text-dark/60">Bonnes réponses</div>
+          <div className="text-sm text-dark/50">Bonnes reponses</div>
         </div>
       </motion.div>
 
-      {/* Continue button */}
+      {/* Mascot */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.4 }}
+        className="mb-6"
+      >
+        <Mascot
+          size={80}
+          expression={isPerfect ? 'excited' : score >= 70 ? 'happy' : 'thinking'}
+        />
+      </motion.div>
+
+      {/* Continue button — prominent */}
       <motion.button
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.5 }}
+        transition={{ delay: 1.5, type: 'spring', stiffness: 300, damping: 25 }}
         whileHover={{ scale: 1.03 }}
-        whileTap={{ scale: 0.97 }}
+        whileTap={{ scale: 0.96 }}
         onClick={() => navigate('/app')}
-        className="w-full max-w-xs py-4 rounded-xl bg-primary text-white font-bold text-lg cursor-pointer"
+        className="w-full max-w-sm py-5 rounded-2xl bg-primary text-white font-bold text-xl cursor-pointer shadow-lg shadow-primary/30"
       >
         Continuer
       </motion.button>

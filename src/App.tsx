@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext'
 import { SoundProvider } from './context/SoundContext'
 import { ToastProvider } from './components/ui/Toast'
+import { PWAInstallBanner } from './components/ui/PWAInstallBanner'
 import AuthGuard from './components/auth/AuthGuard'
 import AdminGuard from './components/auth/AdminGuard'
 
@@ -36,6 +37,7 @@ export default function App() {
       <LanguageProvider>
         <SoundProvider>
           <ToastProvider>
+            <PWAInstallBanner />
             <AnimatePresence mode="wait">
               <Routes>
                 {/* Public routes */}
