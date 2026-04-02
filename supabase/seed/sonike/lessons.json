@@ -1,0 +1,61 @@
+[
+  {"id":"snk-l-01-1","module_id":"snk-mod-01","title":"Dire bonjour","description":"Les salutations de base","xp_reward":10,"order_index":1},
+  {"id":"snk-l-01-2","module_id":"snk-mod-01","title":"Se présenter","description":"Dire son nom et d'où on vient","xp_reward":10,"order_index":2},
+  {"id":"snk-l-01-3","module_id":"snk-mod-01","title":"Comment ça va ?","description":"Demander des nouvelles","xp_reward":15,"order_index":3},
+  {"id":"snk-l-01-4","module_id":"snk-mod-01","title":"La politesse","description":"Merci, s'il vous plaît, pardon","xp_reward":15,"order_index":4},
+  {"id":"snk-l-01-5","module_id":"snk-mod-01","title":"Au revoir","description":"Les formules d'au revoir","xp_reward":10,"order_index":5},
+
+  {"id":"snk-l-02-1","module_id":"snk-mod-02","title":"Les parents","description":"Père, mère, parents","xp_reward":15,"order_index":1},
+  {"id":"snk-l-02-2","module_id":"snk-mod-02","title":"Frères et sœurs","description":"La fratrie","xp_reward":15,"order_index":2},
+  {"id":"snk-l-02-3","module_id":"snk-mod-02","title":"Les grands-parents","description":"Grand-père, grand-mère","xp_reward":15,"order_index":3},
+  {"id":"snk-l-02-4","module_id":"snk-mod-02","title":"Oncles et tantes","description":"La famille élargie","xp_reward":20,"order_index":4},
+  {"id":"snk-l-02-5","module_id":"snk-mod-02","title":"Ma famille","description":"Décrire sa famille","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-03-1","module_id":"snk-mod-03","title":"Les nombres 1-5","description":"Baane, hinka, sikki...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-03-2","module_id":"snk-mod-03","title":"Les nombres 6-10","description":"Tunmu, ñerri...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-03-3","module_id":"snk-mod-03","title":"Les nombres 11-20","description":"Tanmi baane...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-03-4","module_id":"snk-mod-03","title":"Les dizaines","description":"Tanmi, tanka...","xp_reward":20,"order_index":4},
+  {"id":"snk-l-03-5","module_id":"snk-mod-03","title":"Compter des objets","description":"Utiliser les nombres","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-04-1","module_id":"snk-mod-04","title":"Les couleurs de base","description":"Rouge, bleu, vert...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-04-2","module_id":"snk-mod-04","title":"Plus de couleurs","description":"Noir, blanc, jaune...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-04-3","module_id":"snk-mod-04","title":"Les formes","description":"Cercle, carré, triangle","xp_reward":15,"order_index":3},
+  {"id":"snk-l-04-4","module_id":"snk-mod-04","title":"Décrire les objets","description":"Grand, petit, long...","xp_reward":20,"order_index":4},
+  {"id":"snk-l-04-5","module_id":"snk-mod-04","title":"Les couleurs autour de nous","description":"Décrire son environnement","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-05-1","module_id":"snk-mod-05","title":"Animaux domestiques","description":"Chat, chien, poule...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-05-2","module_id":"snk-mod-05","title":"Animaux de la ferme","description":"Vache, mouton, chèvre...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-05-3","module_id":"snk-mod-05","title":"Animaux sauvages","description":"Lion, éléphant, singe...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-05-4","module_id":"snk-mod-05","title":"Les oiseaux","description":"Les oiseaux courants","xp_reward":20,"order_index":4},
+  {"id":"snk-l-05-5","module_id":"snk-mod-05","title":"Les sons des animaux","description":"Décrire les cris d'animaux","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-06-1","module_id":"snk-mod-06","title":"Les fruits","description":"Mangue, banane, orange...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-06-2","module_id":"snk-mod-06","title":"Les légumes","description":"Tomate, oignon, piment...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-06-3","module_id":"snk-mod-06","title":"Les plats","description":"Riz, couscous, sauce...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-06-4","module_id":"snk-mod-06","title":"Au marché","description":"Acheter et vendre","xp_reward":20,"order_index":4},
+  {"id":"snk-l-06-5","module_id":"snk-mod-06","title":"Les boissons","description":"Eau, thé, jus...","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-07-1","module_id":"snk-mod-07","title":"La tête","description":"Yeux, nez, bouche...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-07-2","module_id":"snk-mod-07","title":"Le corps","description":"Bras, jambes, dos...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-07-3","module_id":"snk-mod-07","title":"La santé","description":"Je suis malade, j'ai mal...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-07-4","module_id":"snk-mod-07","title":"Les émotions","description":"Content, triste, fatigué...","xp_reward":20,"order_index":4},
+  {"id":"snk-l-07-5","module_id":"snk-mod-07","title":"Chez le docteur","description":"Dialogue médical de base","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-08-1","module_id":"snk-mod-08","title":"Les vêtements","description":"Chemise, pantalon, boubou...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-08-2","module_id":"snk-mod-08","title":"Les accessoires","description":"Chapeau, chaussures, sac...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-08-3","module_id":"snk-mod-08","title":"Les pièces de la maison","description":"Chambre, cuisine, salon...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-08-4","module_id":"snk-mod-08","title":"Les meubles","description":"Lit, table, chaise...","xp_reward":20,"order_index":4},
+  {"id":"snk-l-08-5","module_id":"snk-mod-08","title":"Ma maison","description":"Décrire sa maison","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-09-1","module_id":"snk-mod-09","title":"À l'école","description":"Stylo, cahier, professeur...","xp_reward":10,"order_index":1},
+  {"id":"snk-l-09-2","module_id":"snk-mod-09","title":"Les jours","description":"Lundi, mardi, mercredi...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-09-3","module_id":"snk-mod-09","title":"Les mois","description":"Janvier, février...","xp_reward":15,"order_index":3},
+  {"id":"snk-l-09-4","module_id":"snk-mod-09","title":"La météo","description":"Il fait chaud, il pleut...","xp_reward":20,"order_index":4},
+  {"id":"snk-l-09-5","module_id":"snk-mod-09","title":"Quelle heure est-il ?","description":"Dire l'heure","xp_reward":20,"order_index":5},
+
+  {"id":"snk-l-10-1","module_id":"snk-mod-10","title":"Les verbes de base","description":"Être, avoir, aller, venir...","xp_reward":15,"order_index":1},
+  {"id":"snk-l-10-2","module_id":"snk-mod-10","title":"Actions quotidiennes","description":"Manger, boire, dormir...","xp_reward":15,"order_index":2},
+  {"id":"snk-l-10-3","module_id":"snk-mod-10","title":"Le matin","description":"Routine du matin","xp_reward":20,"order_index":3},
+  {"id":"snk-l-10-4","module_id":"snk-mod-10","title":"Le soir","description":"Routine du soir","xp_reward":20,"order_index":4},
+  {"id":"snk-l-10-5","module_id":"snk-mod-10","title":"Dialogues du quotidien","description":"Conversations courantes","xp_reward":25,"order_index":5}
+]

@@ -1,0 +1,326 @@
+[
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "multiple_choice",
+    "order_index": 1,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Comment dit-on « Bonjour » en Soninké ?",
+      "options": ["An ni telle", "An ni wuro", "An maarandi", "Tanante"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "translation",
+    "order_index": 2,
+    "data": {
+      "type": "translation",
+      "prompt": "An ni telle",
+      "correct_answer": "Bonjour",
+      "accepted_answers": ["Bonjour", "Salut", "bonjour"],
+      "word_bank": ["Bonjour", "Au revoir", "Merci", "Comment"],
+      "source_lang": "snk",
+      "target_lang": "fr"
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "word_match",
+    "order_index": 3,
+    "data": {
+      "type": "word_match",
+      "pairs": [
+        {"left": "An ni telle", "right": "Bonjour (le matin)"},
+        {"left": "An ni wuro", "right": "Bonsoir"},
+        {"left": "An ni yinme", "right": "Bon après-midi"},
+        {"left": "Tanante", "right": "Bienvenue"}
+      ]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "fill_blank",
+    "order_index": 4,
+    "data": {
+      "type": "fill_blank",
+      "sentence": "An ni ___  (Bonjour)",
+      "blank_index": 2,
+      "options": ["telle", "wuro", "safe", "yinme"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "word_order",
+    "order_index": 5,
+    "data": {
+      "type": "word_order",
+      "prompt": "Dites : « Bonjour » en Soninké",
+      "correct_order": ["An", "ni", "telle"],
+      "shuffled_words": ["telle", "An", "ni"]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-1",
+    "type": "multiple_choice",
+    "order_index": 6,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Que signifie « An ni wuro » ?",
+      "options": ["Bonsoir", "Bonjour", "Au revoir", "Merci"],
+      "correct_index": 0
+    }
+  },
+
+  {
+    "lesson_id": "snk-l-01-2",
+    "type": "multiple_choice",
+    "order_index": 1,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Comment dit-on « Je m'appelle » en Soninké ?",
+      "options": ["N toxo ni", "I toxo ni", "A toxo ni", "An toxo ni"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-2",
+    "type": "translation",
+    "order_index": 2,
+    "data": {
+      "type": "translation",
+      "prompt": "N toxo ni Amadou",
+      "correct_answer": "Je m'appelle Amadou",
+      "accepted_answers": ["Je m'appelle Amadou", "Mon nom est Amadou"],
+      "word_bank": ["Je", "m'appelle", "Amadou", "suis", "Mon", "nom"],
+      "source_lang": "snk",
+      "target_lang": "fr"
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-2",
+    "type": "fill_blank",
+    "order_index": 3,
+    "data": {
+      "type": "fill_blank",
+      "sentence": "N ___  ni Mariam (Je m'appelle Mariam)",
+      "blank_index": 1,
+      "options": ["toxo", "safe", "telle", "wuro"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-2",
+    "type": "word_match",
+    "order_index": 4,
+    "data": {
+      "type": "word_match",
+      "pairs": [
+        {"left": "N", "right": "Je / Mon"},
+        {"left": "I", "right": "Tu / Ton"},
+        {"left": "A", "right": "Il / Elle"},
+        {"left": "An", "right": "Nous"}
+      ]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-2",
+    "type": "word_order",
+    "order_index": 5,
+    "data": {
+      "type": "word_order",
+      "prompt": "Dites : « Je m'appelle Fatou »",
+      "correct_order": ["N", "toxo", "ni", "Fatou"],
+      "shuffled_words": ["Fatou", "toxo", "N", "ni"]
+    }
+  },
+
+  {
+    "lesson_id": "snk-l-01-3",
+    "type": "multiple_choice",
+    "order_index": 1,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Comment dit-on « Comment vas-tu ? » en Soninké ?",
+      "options": ["An kuta safe?", "An ni telle", "I toxo ni mun?", "An ga nta?"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-3",
+    "type": "translation",
+    "order_index": 2,
+    "data": {
+      "type": "translation",
+      "prompt": "An kuta safe?",
+      "correct_answer": "Comment vas-tu ?",
+      "accepted_answers": ["Comment vas-tu ?", "Comment vas-tu", "Tu vas bien ?", "Ca va ?", "Ça va ?"],
+      "source_lang": "snk",
+      "target_lang": "fr"
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-3",
+    "type": "fill_blank",
+    "order_index": 3,
+    "data": {
+      "type": "fill_blank",
+      "sentence": "An kuta ___? (Comment vas-tu ?)",
+      "blank_index": 2,
+      "options": ["safe", "telle", "toxo", "wuro"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-3",
+    "type": "word_match",
+    "order_index": 4,
+    "data": {
+      "type": "word_match",
+      "pairs": [
+        {"left": "An kuta safe?", "right": "Comment vas-tu ?"},
+        {"left": "Jam mu halle", "right": "Ça va bien"},
+        {"left": "Safe ti", "right": "Pas bien"},
+        {"left": "Alhamdulillah", "right": "Grâce à Dieu"}
+      ]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-3",
+    "type": "word_order",
+    "order_index": 5,
+    "data": {
+      "type": "word_order",
+      "prompt": "Demandez : « Comment vas-tu ? »",
+      "correct_order": ["An", "kuta", "safe?"],
+      "shuffled_words": ["safe?", "An", "kuta"]
+    }
+  },
+
+  {
+    "lesson_id": "snk-l-01-4",
+    "type": "multiple_choice",
+    "order_index": 1,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Comment dit-on « Merci » en Soninké ?",
+      "options": ["An maarandi", "An ni telle", "Tanante", "An kuta safe"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-4",
+    "type": "word_match",
+    "order_index": 2,
+    "data": {
+      "type": "word_match",
+      "pairs": [
+        {"left": "An maarandi", "right": "Merci"},
+        {"left": "Hakke to", "right": "Pardon"},
+        {"left": "Yaafo", "right": "Excuse-moi"},
+        {"left": "An maarandi katti", "right": "Merci beaucoup"}
+      ]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-4",
+    "type": "fill_blank",
+    "order_index": 3,
+    "data": {
+      "type": "fill_blank",
+      "sentence": "An ___  (Merci)",
+      "blank_index": 1,
+      "options": ["maarandi", "kuta", "toxo", "telle"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-4",
+    "type": "translation",
+    "order_index": 4,
+    "data": {
+      "type": "translation",
+      "prompt": "An maarandi katti",
+      "correct_answer": "Merci beaucoup",
+      "accepted_answers": ["Merci beaucoup", "Merci énormément"],
+      "word_bank": ["Merci", "beaucoup", "bien", "pardon"],
+      "source_lang": "snk",
+      "target_lang": "fr"
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-4",
+    "type": "word_order",
+    "order_index": 5,
+    "data": {
+      "type": "word_order",
+      "prompt": "Dites : « Merci beaucoup »",
+      "correct_order": ["An", "maarandi", "katti"],
+      "shuffled_words": ["katti", "An", "maarandi"]
+    }
+  },
+
+  {
+    "lesson_id": "snk-l-01-5",
+    "type": "multiple_choice",
+    "order_index": 1,
+    "data": {
+      "type": "multiple_choice",
+      "question": "Comment dit-on « Au revoir » en Soninké ?",
+      "options": ["An ga fo", "An ni telle", "An maarandi", "Tanante"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-5",
+    "type": "word_match",
+    "order_index": 2,
+    "data": {
+      "type": "word_match",
+      "pairs": [
+        {"left": "An ga fo", "right": "Au revoir"},
+        {"left": "Alla ga an kisi", "right": "Que Dieu nous protège"},
+        {"left": "Bi xanne ga", "right": "À demain"},
+        {"left": "An ga tugu", "right": "À bientôt"}
+      ]
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-5",
+    "type": "fill_blank",
+    "order_index": 3,
+    "data": {
+      "type": "fill_blank",
+      "sentence": "An ga ___  (Au revoir)",
+      "blank_index": 2,
+      "options": ["fo", "safe", "telle", "toxo"],
+      "correct_index": 0
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-5",
+    "type": "translation",
+    "order_index": 4,
+    "data": {
+      "type": "translation",
+      "prompt": "Bi xanne ga",
+      "correct_answer": "À demain",
+      "accepted_answers": ["À demain", "A demain"],
+      "word_bank": ["À", "demain", "bientôt", "ce soir"],
+      "source_lang": "snk",
+      "target_lang": "fr"
+    }
+  },
+  {
+    "lesson_id": "snk-l-01-5",
+    "type": "word_order",
+    "order_index": 5,
+    "data": {
+      "type": "word_order",
+      "prompt": "Dites : « Au revoir »",
+      "correct_order": ["An", "ga", "fo"],
+      "shuffled_words": ["fo", "An", "ga"]
+    }
+  }
+]

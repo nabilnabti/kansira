@@ -1,0 +1,102 @@
+[
+  {
+    "id": "snk-mod-01",
+    "language_id": "snk",
+    "title": "Salutations & Bases",
+    "description": "Apprenez à saluer et à vous présenter en Soninké",
+    "icon": "👋",
+    "order_index": 1,
+    "is_free": true,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-02",
+    "language_id": "snk",
+    "title": "La Famille",
+    "description": "Les membres de la famille en Soninké",
+    "icon": "👨‍👩‍👧‍👦",
+    "order_index": 2,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-03",
+    "language_id": "snk",
+    "title": "Les Nombres",
+    "description": "Comptez de 1 à 100 en Soninké",
+    "icon": "🔢",
+    "order_index": 3,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-04",
+    "language_id": "snk",
+    "title": "Couleurs & Formes",
+    "description": "Les couleurs et les formes en Soninké",
+    "icon": "🎨",
+    "order_index": 4,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-05",
+    "language_id": "snk",
+    "title": "Les Animaux",
+    "description": "Les animaux domestiques et sauvages",
+    "icon": "🦁",
+    "order_index": 5,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-06",
+    "language_id": "snk",
+    "title": "Nourriture & Marché",
+    "description": "Les aliments et faire ses courses",
+    "icon": "🍎",
+    "order_index": 6,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-07",
+    "language_id": "snk",
+    "title": "Le Corps Humain",
+    "description": "Les parties du corps et la santé",
+    "icon": "🧍",
+    "order_index": 7,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-08",
+    "language_id": "snk",
+    "title": "Vêtements & Maison",
+    "description": "Les habits et les pièces de la maison",
+    "icon": "🏠",
+    "order_index": 8,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-09",
+    "language_id": "snk",
+    "title": "L'École & Le Temps",
+    "description": "L'école, les jours et la météo",
+    "icon": "📚",
+    "order_index": 9,
+    "is_free": false,
+    "is_published": true
+  },
+  {
+    "id": "snk-mod-10",
+    "language_id": "snk",
+    "title": "Verbes & Quotidien",
+    "description": "Les verbes courants et le quotidien",
+    "icon": "💬",
+    "order_index": 10,
+    "is_free": false,
+    "is_published": true
+  }
+]
