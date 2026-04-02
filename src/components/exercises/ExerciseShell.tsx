@@ -127,7 +127,7 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
             transition={{ delay: 0.2 }}
             className="text-3xl font-heading font-bold text-dark mb-2"
           >
-            Pret a apprendre ?
+            Prêt à apprendre ?
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -210,7 +210,7 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
 
       {/* Bottom check button */}
       {state === 'exercise' && (
-        <div className="px-5 pb-safe">
+        <div className="px-5" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 16px)' }}>
           <div className="pb-5 pt-3">
             <motion.button
               initial={{ opacity: 0, y: 20 }}
@@ -230,7 +230,7 @@ export function ExerciseShell({ exercises, xpReward = 25 }: ExerciseShellProps) 
                 }
               `}
             >
-              Verifier
+              Vérifier
             </motion.button>
           </div>
         </div>

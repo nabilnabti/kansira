@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Volume2 } from 'lucide-react'
+import { Volume2, RotateCcw } from 'lucide-react'
 import type { ListenChooseData } from '../../types/database'
 import type { ExerciseProps } from './MultipleChoice'
+import { speak, stopSpeaking } from '../../lib/tts'
 
 const letters = ['A', 'B', 'C', 'D', 'E', 'F']
 
@@ -13,38 +14,46 @@ export function ListenChoose({
 }: ExerciseProps<ListenChooseData>) {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [playCount, setPlayCount] = useState(0)
+
+  // Auto-play on mount after a short delay
+  useEffect(() => {
+    const timer = setTimeout(() => playAudio(), 600)
+    return () => {
+      clearTimeout(timer)
+      stopSpeaking()
+    }
+  }, [])
 
   const playAudio = useCallback(() => {
     if (isPlaying) return
 
     setIsPlaying(true)
+    setPlayCount((c) => c + 1)
 
-    // Try HTML5 Audio first, fallback to SpeechSynthesis
-    if (data.audio_url) {
-      const audio = new Audio(data.audio_url)
-      audio.onended = () => setIsPlaying(false)
-      audio.onerror = () => {
-        // Fallback to SpeechSynthesis
-        speakText(data.transcript)
-      }
-      audio.play().catch(() => speakText(data.transcript))
-    } else {
-      speakText(data.transcript)
-    }
-  }, [data.audio_url, data.transcript, isPlaying])
+    // Use our enhanced TTS engine
+    speak({
+      text: data.transcript,
+      lang: 'bm', // Bambara — will use French voice at slower rate
+      rate: playCount === 0 ? 0.65 : 0.55, // Even slower on replay
+      onEnd: () => setIsPlaying(false),
+      onError: () => setIsPlaying(false),
+    })
+  }, [data.transcript, isPlaying, playCount])
 
-  const speakText = (text: string) => {
-    if ('speechSynthesis' in window) {
-      window.speechSynthesis.cancel()
-      const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = 0.85
-      utterance.onend = () => setIsPlaying(false)
-      utterance.onerror = () => setIsPlaying(false)
-      window.speechSynthesis.speak(utterance)
-    } else {
-      setIsPlaying(false)
-    }
-  }
+  const playSlower = useCallback(() => {
+    if (isPlaying) return
+
+    setIsPlaying(true)
+
+    speak({
+      text: data.transcript,
+      lang: 'bm',
+      rate: 0.45, // Very slow for careful listening
+      onEnd: () => setIsPlaying(false),
+      onError: () => setIsPlaying(false),
+    })
+  }, [data.transcript, isPlaying])
 
   const handleSelect = (index: number) => {
     if (disabled) return
@@ -62,7 +71,7 @@ export function ListenChoose({
         className="flex flex-col items-center"
       >
         <p className="text-sm text-dark/45 mb-5 text-center font-medium">
-          Que dit cette phrase ?
+          Écoutez et choisissez la bonne réponse
         </p>
 
         {/* Large speaker button with sound waves */}
@@ -82,6 +91,12 @@ export function ListenChoose({
                 transition={{ duration: 1.2, repeat: Infinity, ease: 'easeOut', delay: 0.3 }}
                 className="absolute inset-0 rounded-full bg-primary/15"
               />
+              <motion.div
+                initial={{ scale: 1, opacity: 0.1 }}
+                animate={{ scale: 1.8, opacity: 0 }}
+                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeOut', delay: 0.6 }}
+                className="absolute inset-0 rounded-full bg-primary/10"
+              />
             </>
           )}
 
@@ -97,22 +112,40 @@ export function ListenChoose({
                 : {}
             }
             onClick={playAudio}
-            className="relative w-20 h-20 rounded-full bg-primary flex items-center justify-center cursor-pointer shadow-xl shadow-primary/30"
+            className="relative w-24 h-24 rounded-full bg-primary flex items-center justify-center cursor-pointer shadow-xl shadow-primary/30"
           >
-            <Volume2 className="w-9 h-9 text-white" />
+            <Volume2 className="w-10 h-10 text-white" />
           </motion.button>
         </div>
 
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={playAudio}
-          className="mt-3 text-primary text-sm font-bold cursor-pointer"
-        >
-          Ecouter
-        </motion.button>
+        {/* Playback controls */}
+        <div className="flex items-center gap-4 mt-4">
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={playAudio}
+            className="text-primary text-sm font-bold cursor-pointer flex items-center gap-1.5"
+          >
+            <Volume2 size={16} />
+            Réécouter
+          </motion.button>
+
+          <span className="text-dark/20">|</span>
+
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={playSlower}
+            className="text-dark/50 text-sm font-bold cursor-pointer flex items-center gap-1.5"
+          >
+            <RotateCcw size={14} />
+            Plus lent
+          </motion.button>
+        </div>
       </motion.div>
 
       {/* Options — same style as MultipleChoice */}

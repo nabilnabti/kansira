@@ -6,21 +6,21 @@ const steps = [
     number: 1,
     title: "choisis ta langue",
     description:
-      "Bambara ou Soninke ? Selectionne ta langue et commence ton parcours personnalise.",
+      "Bambara ou Soninké ? Sélectionne ta langue et commence ton parcours personnalisé.",
     emoji: "🌍",
   },
   {
     number: 2,
     title: "suis le parcours",
     description:
-      "Des lecons structurees avec des exercices interactifs a chaque etape. Du debutant a l'avance.",
+      "Des leçons structurees avec des exercices interactifs à chaque etape. Du debutant a l'avance.",
     emoji: "📚",
   },
   {
     number: 3,
     title: "progresse en jouant",
     description:
-      "Gagne des points, debloque des badges et suis ta progression jour apres jour.",
+      "Gagne des points, débloque des badges et suis ta progression jour apres jour.",
     emoji: "🚀",
   },
 ];

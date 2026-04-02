@@ -7,7 +7,7 @@ const testimonials = [
     initials: "AD",
     role: "Etudiante, Paris",
     quote:
-      "Grace a Kan Sira, j'ai enfin pu apprendre le Bambara de mes parents. Les lecons sont courtes et addictives, je ne peux plus m'arreter !",
+      "Grace a Kan Sira, j'ai enfin pu apprendre le Bambara de mes parents. Les leçons sont courtes et addictives, je ne peux plus m'arreter !",
     color: "primary",
     rating: 5,
   },
@@ -16,7 +16,7 @@ const testimonials = [
     initials: "MC",
     role: "Ingenieur, Lyon",
     quote:
-      "L'application est incroyablement bien faite. L'audio natif m'aide enormement avec la prononciation du Soninke. Un vrai plaisir d'apprendre.",
+      "L'application est incroyablement bien faite. L'audio natif m'aide énormément avec la prononciation du Soninké. Un vrai plaisir d'apprendre.",
     color: "secondary",
     rating: 5,
   },

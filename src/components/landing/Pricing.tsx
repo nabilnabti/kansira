@@ -11,7 +11,7 @@ const plans = [
     description: "Parfait pour decouvrir l'application",
     features: [
       "Module 1 gratuit",
-      "5 lecons completes",
+      "5 leçons completes",
       "Exercices varies",
       "Audio natif",
     ],
@@ -25,7 +25,7 @@ const plans = [
     description: "Acces illimite a tout le contenu",
     features: [
       "Tout le contenu",
-      "100+ lecons",
+      "100+ leçons",
       "Badges exclusifs",
       "Support prioritaire",
     ],

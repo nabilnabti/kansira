@@ -44,7 +44,7 @@ export default function Navbar() {
               onClick={() => navigate("/login")}
               className="text-sm font-bold text-dark/60 hover:text-primary transition-colors cursor-pointer uppercase tracking-wider"
             >
-              J'ai deja un compte
+              J'ai déjà un compte
             </button>
             <button
               onClick={() => navigate("/signup")}
@@ -79,7 +79,7 @@ export default function Navbar() {
                 onClick={() => { setMobileOpen(false); navigate("/login"); }}
                 className="text-left text-sm font-bold text-dark/60 hover:text-primary transition-colors py-2 cursor-pointer uppercase tracking-wider"
               >
-                J'ai deja un compte
+                J'ai déjà un compte
               </button>
               <button
                 onClick={() => { setMobileOpen(false); navigate("/signup"); }}

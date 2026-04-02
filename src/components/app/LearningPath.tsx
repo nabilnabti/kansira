@@ -246,7 +246,7 @@ function ModuleHeader({ module: mod, index }: { module: ModuleData; index: numbe
           )}
         </div>
         <p className="text-xs text-gray-400">
-          {completedCount}/{mod.lessons.length} lecons
+          {completedCount}/{mod.lessons.length} leçons
         </p>
       </div>
     </motion.div>
@@ -281,7 +281,7 @@ function PremiumBanner() {
 
         <div className="space-y-1.5 mb-4 ml-1">
           <p className="text-[13px] text-white/80 flex items-center gap-2">
-            <Check size={14} strokeWidth={3} /> 100+ lecons interactives
+            <Check size={14} strokeWidth={3} /> 100+ leçons interactives
           </p>
           <p className="text-[13px] text-white/80 flex items-center gap-2">
             <Check size={14} strokeWidth={3} /> 10 modules complets
@@ -365,7 +365,7 @@ export default function LearningPath() {
             transition={{ delay: 0.3 }}
             className="text-sm text-gray-500 mt-0.5"
           >
-            Pret pour votre lecon ?
+            Prêt pour votre leçon ?
           </motion.p>
         </div>
       </motion.div>

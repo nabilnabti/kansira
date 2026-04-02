@@ -24,7 +24,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="mt-3 text-sm text-white/40 leading-relaxed max-w-xs">
-              Apprends le Bambara et le Soninke de maniere ludique et
+              Apprends le Bambara et le Soninké de manière ludique et
               interactive, ou que tu sois.
             </p>
           </div>
@@ -94,7 +94,7 @@ export default function Footer() {
               </li>
               <li className="text-sm text-white/40">
                 <span className="mr-2">{"\ud83c\uddf2\ud83c\uddf1"}</span>
-                Soninke
+                Soninké
               </li>
             </ul>
           </div>

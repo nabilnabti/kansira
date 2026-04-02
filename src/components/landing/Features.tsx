@@ -32,7 +32,7 @@ const sections = [
     id: "gamification",
     title: "une methode ludique",
     description:
-      "Gagne des XP a chaque bonne reponse, debloque des badges et maintiens ta serie quotidienne. Avec Kan Sira, apprendre les langues africaines devient un jeu dont tu ne te lasseras jamais.",
+      "Gagne des XP à chaque bonne réponse, débloque des badges et maintiens ta série quotidienne. Avec Kan Sira, apprendre les langues africaines devient un jeu dont tu ne te lasseras jamais.",
     mascotExpression: "excited" as const,
     reverse: false,
     renderDecorations: () => (

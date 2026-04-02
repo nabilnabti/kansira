@@ -74,7 +74,8 @@ export function LessonComplete({
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 z-50 bg-background flex flex-col items-center justify-center px-6 pt-safe pb-safe overflow-hidden"
+      className="fixed inset-0 z-50 bg-background flex flex-col items-center justify-center px-6 overflow-hidden overflow-y-auto"
+      style={{ paddingTop: 'calc(env(safe-area-inset-top, 0px) + 16px)', paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
     >
       {/* Confetti for good scores */}
       {score >= 70 &&

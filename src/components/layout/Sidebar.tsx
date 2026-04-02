@@ -11,12 +11,12 @@ const navItems = [
   { to: '/app/profile', label: 'Profil', icon: User },
   { to: '/app/badges', label: 'Badges', icon: Award },
   { to: '/app/premium', label: 'Premium', icon: Crown },
-  { to: '/app/settings', label: 'Parametres', icon: Settings },
+  { to: '/app/settings', label: 'Paramètres', icon: Settings },
 ]
 
 const languageOptions = [
   { code: 'bm' as const, label: 'Bambara' },
-  { code: 'snk' as const, label: 'Soninke' },
+  { code: 'snk' as const, label: 'Soninké' },
 ]
 
 export default function Sidebar() {

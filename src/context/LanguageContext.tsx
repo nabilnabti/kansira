@@ -14,7 +14,7 @@ const STORAGE_KEY = 'kansira_language'
 
 const labels: Record<LanguageCode, string> = {
   bm: 'Bambara',
-  snk: 'Soninke',
+  snk: 'Soninké',
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

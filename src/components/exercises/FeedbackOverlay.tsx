@@ -62,11 +62,12 @@ export function FeedbackOverlay({
           className="fixed bottom-0 left-0 right-0 z-50"
         >
           <div
-            className={`rounded-t-3xl px-6 pt-6 pb-safe overflow-hidden relative ${
+            className={`rounded-t-3xl px-6 pt-6 overflow-hidden relative ${
               isCorrect
                 ? 'bg-secondary text-white'
                 : 'bg-accent text-white'
             }`}
+            style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
           >
             <div className="pb-7">
               {/* Confetti for correct */}
@@ -130,7 +131,7 @@ export function FeedbackOverlay({
                     transition={{ delay: 0.25 }}
                     className="text-white/85 text-sm mb-3 ml-14"
                   >
-                    Bonne reponse : <span className="font-bold">{correctAnswer}</span>
+                    Bonne réponse : <span className="font-bold">{correctAnswer}</span>
                   </motion.p>
                 )}
               </motion.div>

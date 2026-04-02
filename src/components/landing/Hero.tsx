@@ -77,7 +77,7 @@ export default function Hero() {
               <span className="text-primary">gratuite</span>,{" "}
               <span className="text-secondary">fun</span> et{" "}
               <span className="text-gold">efficace</span>{" "}
-              pour apprendre le Bambara et le Soninke !
+              pour apprendre le Bambara et le Soninké !
             </motion.h1>
 
             <motion.div
@@ -96,7 +96,7 @@ export default function Hero() {
                 onClick={() => navigate("/login")}
                 className="bg-white hover:bg-gray-50 text-dark border-2 border-gray-200 rounded-2xl px-10 py-4 text-base font-bold uppercase tracking-wider cursor-pointer border-b-4 border-b-gray-300 active:border-b-0 active:translate-y-1 transition-all"
               >
-                J'ai deja un compte
+                J'ai déjà un compte
               </button>
             </motion.div>
 
@@ -113,7 +113,7 @@ export default function Hero() {
               </div>
               <div className="inline-flex items-center gap-2 bg-secondary/10 rounded-full px-5 py-2.5">
                 <span className="text-lg">{"\ud83c\uddf2\ud83c\uddf1"}</span>
-                <span className="font-bold text-sm text-secondary">Soninke</span>
+                <span className="font-bold text-sm text-secondary">Soninké</span>
               </div>
             </motion.div>
           </motion.div>

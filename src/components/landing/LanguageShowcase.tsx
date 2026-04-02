@@ -21,7 +21,7 @@ export default function LanguageShowcase() {
             </h2>
             <p className="mt-6 text-lg text-dark/60 leading-relaxed max-w-lg">
               Apprendre avec Kan Sira, c'est fun, et en plus ca marche vraiment !
-              Avec nos lecons courtes et interactives, tu progresseras chaque jour
+              Avec nos leçons courtes et interactives, tu progresseras chaque jour
               sans meme t'en rendre compte. Pas de pression, juste du plaisir.
             </p>
           </motion.div>
