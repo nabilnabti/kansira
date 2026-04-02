@@ -26,13 +26,11 @@ function StatCard({
   label,
   value,
   bgColor,
-  index,
 }: {
   icon: React.ElementType
   label: string
   value: string | number
   bgColor: string
-  index: number
 }) {
   return (
     <motion.div
@@ -112,28 +110,28 @@ export default function ProfilePage() {
           label="XP total"
           value={mockStats.totalXP.toLocaleString()}
           bgColor="bg-[#FF6B00]"
-          index={0}
+
         />
         <StatCard
           icon={TrendingUp}
           label="Niveau"
           value={mockStats.level}
           bgColor="bg-[#2D9F4F]"
-          index={1}
+
         />
         <StatCard
           icon={Flame}
           label="S\u00e9rie (jours)"
           value={mockStats.streak}
           bgColor="bg-[#F4A100]"
-          index={2}
+
         />
         <StatCard
           icon={BookOpen}
           label="Le\u00e7ons termin\u00e9es"
           value={mockStats.lessonsCompleted}
           bgColor="bg-[#131516]"
-          index={3}
+
         />
       </motion.div>
 
