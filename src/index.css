@@ -19,6 +19,11 @@
   --font-heading: 'Roboto', sans-serif;
 }
 
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-background-light);
@@ -34,6 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #root {
   min-height: 100svh;
+  overflow-x: hidden;
 }
 
 /* Bouton 3D style Duolingo */

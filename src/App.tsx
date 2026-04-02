@@ -9,7 +9,8 @@ import AuthGuard from './components/auth/AuthGuard'
 import AdminGuard from './components/auth/AdminGuard'
 
 // Pages
-import LandingPage from './pages/LandingPage'
+import HomePage from './pages/HomePage'
+import OnboardingPage from './pages/OnboardingPage'
 import LoginPage from './pages/LoginPage'
 import SignupPage from './pages/SignupPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
@@ -40,8 +41,9 @@ export default function App() {
             <PWAInstallBanner />
             <AnimatePresence mode="wait">
               <Routes>
-                {/* Public routes */}
-                <Route path="/" element={<LandingPage />} />
+                {/* Smart home: landing (browser) or onboarding (PWA) */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/onboarding" element={<OnboardingPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/signup" element={<SignupPage />} />
                 <Route path="/reset-password" element={<ResetPasswordPage />} />
