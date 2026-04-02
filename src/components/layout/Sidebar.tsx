@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, User, Award, Settings, ChevronDown, Crown } from 'lucide-react'
+import { Home, User, Award, Settings, ChevronDown, Crown, BookOpen } from 'lucide-react'
 import { useState } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
 import { Mascot } from '../ui/Mascot'
@@ -8,6 +8,7 @@ import XPBar from '../app/XPBar'
 
 const navItems = [
   { to: '/app', label: 'Parcours', icon: Home },
+  { to: '/app/stories', label: 'Histoires', icon: BookOpen },
   { to: '/app/profile', label: 'Profil', icon: User },
   { to: '/app/badges', label: 'Badges', icon: Award },
   { to: '/app/premium', label: 'Premium', icon: Crown },

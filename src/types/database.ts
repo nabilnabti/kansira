@@ -223,3 +223,37 @@ export interface LessonWithProgress extends Lesson {
   locked: boolean
   premium_locked: boolean
 }
+
+// Story types
+export type StoryBackground = 'morning' | 'market' | 'night' | 'village' | 'river'
+
+export interface StoryInteraction {
+  type: 'fill_blank' | 'comprehension' | 'listen'
+  question?: string
+  sentence?: string
+  options: string[]
+  correct_index: number
+}
+
+export interface StorySlide {
+  id: string
+  text_target: string
+  text_french: string
+  background: StoryBackground
+  illustration: string
+  speaker?: string
+  auto_play_tts?: boolean
+  interaction?: StoryInteraction
+}
+
+export interface StoryData {
+  id: string
+  language_id: string
+  title: string
+  description: string
+  icon: string
+  level: number
+  xp_reward: number
+  slides: StorySlide[]
+  is_free: boolean
+}

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Home, Award, Crown, Settings } from 'lucide-react'
+import { Home, Award, Crown, Settings, BookOpen } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 interface TabItem {
@@ -11,6 +11,7 @@ interface TabItem {
 
 const tabs: TabItem[] = [
   { to: '/app', label: 'Parcours', icon: Home },
+  { to: '/app/stories', label: 'Histoires', icon: BookOpen },
   { to: '/app/badges', label: 'Badges', icon: Award },
   { to: '/app/premium', label: 'Premium', icon: Crown },
   { to: '/app/settings', label: 'Réglages', icon: Settings },

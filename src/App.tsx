@@ -20,6 +20,8 @@ import ProfilePage from './pages/ProfilePage'
 import BadgesPage from './pages/BadgesPage'
 import SettingsPage from './pages/SettingsPage'
 import PremiumPage from './pages/PremiumPage'
+import StoriesPage from './pages/StoriesPage'
+import StoryReaderPage from './pages/StoryReaderPage'
 
 // Admin pages
 import AdminDashboard from './pages/admin/AdminDashboard'
@@ -56,8 +58,10 @@ export default function App() {
                     <Route path="badges" element={<BadgesPage />} />
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="premium" element={<PremiumPage />} />
+                    <Route path="stories" element={<StoriesPage />} />
                   </Route>
                   <Route path="lesson/:id" element={<LessonPage />} />
+                  <Route path="story/:id" element={<StoryReaderPage />} />
                 </Route>
 
                 {/* Admin routes */}
