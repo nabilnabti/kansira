@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Target, Globe, Volume2, Bell, LogOut, Settings } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
+import { resetOnboarding } from './OnboardingPage'
 
 const goalOptions = [10, 20, 30, 50]
 
@@ -59,7 +60,7 @@ export default function SettingsPage() {
         className="mb-6 flex items-center gap-3"
       >
         <Settings size={24} className="text-[#FF6B00]" />
-        <h1 className="text-2xl font-bold text-[#131516]">Param\u00e8tres</h1>
+        <h1 className="text-2xl font-bold text-[#131516]">Paramètres</h1>
       </motion.div>
 
       <motion.div
@@ -120,7 +121,7 @@ export default function SettingsPage() {
                     : 'bg-[#FFF3E0]/60 text-[#131516]/60 active:bg-[#FFF3E0]'
                 }`}
               >
-                {code === 'bm' ? '\uD83C\uDDF2\uD83C\uDDF1 Bambara' : '\uD83C\uDDF2\uD83C\uDDF1 Sonink\u00e9'}
+                {code === 'bm' ? '🇲🇱 Bambara' : '🇲🇱 Soninké'}
               </motion.button>
             ))}
           </div>
@@ -166,13 +167,14 @@ export default function SettingsPage() {
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={async () => {
+              resetOnboarding()
               await signOut()
               navigate('/')
             }}
             className="w-full flex items-center justify-center gap-2.5 h-14 bg-[#E63946]/10 rounded-2xl text-[#E63946] font-bold text-sm active:bg-[#E63946]/15 transition-colors"
           >
             <LogOut size={18} />
-            Se d\u00e9connecter
+            Se déconnecter
           </motion.button>
 
           <div className="text-center">

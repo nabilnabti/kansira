@@ -15,15 +15,20 @@ export default function HomePage() {
 
   if (loading) return null
 
-  // Already logged in → go to app
+  // Logged in but hasn't seen onboarding → show it
+  if (user && !isOnboardingDone()) {
+    return <Navigate to="/onboarding" replace />
+  }
+
+  // Logged in and onboarding done → go to app
   if (user) return <Navigate to="/app" replace />
 
-  // In PWA mode → onboarding first, then login
+  // PWA mode, not logged in → onboarding then login
   if (isPWA()) {
     if (!isOnboardingDone()) return <Navigate to="/onboarding" replace />
     return <Navigate to="/login" replace />
   }
 
-  // In browser → show landing page
+  // Browser, not logged in → landing page
   return <LandingPage />
 }

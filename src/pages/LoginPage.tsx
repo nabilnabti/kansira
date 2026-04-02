@@ -22,7 +22,7 @@ export default function LoginPage() {
 
     try {
       await signIn(email, password)
-      navigate('/app')
+      navigate('/onboarding')
     } catch (err: any) {
       setError(err.message || 'Une erreur est survenue lors de la connexion.')
     } finally {
@@ -132,7 +132,7 @@ export default function LoginPage() {
                 to="/reset-password"
                 className="text-sm font-semibold text-[#FF6B00] transition-colors active:text-[#FF6B00]/70"
               >
-                Mot de passe oubli&eacute; ?
+                Mot de passe oublié ?
               </Link>
             </div>
 
@@ -158,7 +158,7 @@ export default function LoginPage() {
               to="/signup"
               className="font-bold text-[#2D9F4F] transition-colors active:text-[#2D9F4F]/70"
             >
-              Cr&eacute;er un compte
+              Créer un compte
             </Link>
           </p>
         </div>

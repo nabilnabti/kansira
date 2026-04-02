@@ -12,15 +12,15 @@ interface Badge {
 }
 
 const mockBadges: Badge[] = [
-  { id: 'b1', name: 'Premier pas', description: 'Terminer votre premi\u00e8re le\u00e7on', icon: '\uD83D\uDC63', earned: true, earnedDate: '15 mars 2026' },
-  { id: 'b2', name: 'S\u00e9rie de 3', description: '3 jours cons\u00e9cutifs', icon: '\uD83D\uDD25', earned: true, earnedDate: '18 mars 2026' },
-  { id: 'b3', name: 'S\u00e9rie de 7', description: '7 jours cons\u00e9cutifs', icon: '\u2B50', earned: true, earnedDate: '22 mars 2026' },
-  { id: 'b4', name: 'Perfectionniste', description: 'Score parfait sur une le\u00e7on', icon: '\uD83D\uDC8E', earned: true, earnedDate: '20 mars 2026' },
-  { id: 'b5', name: 'Explorateur', description: 'Terminer un module complet', icon: '\uD83C\uDF0D', earned: false },
-  { id: 'b6', name: 'Polyglotte', description: '\u00c9tudier 2 langues', icon: '\uD83D\uDDE3\uFE0F', earned: false },
-  { id: 'b7', name: 'S\u00e9rie de 30', description: '30 jours cons\u00e9cutifs', icon: '\uD83C\uDFC6', earned: false },
-  { id: 'b8', name: 'Ma\u00eetre', description: '1000 XP total', icon: '\uD83D\uDC51', earned: false },
-  { id: 'b9', name: 'Marathon', description: '10 le\u00e7ons en un jour', icon: '\uD83C\uDFC3', earned: false },
+  { id: 'b1', name: 'Premier pas', description: 'Terminer votre première leçon', icon: '👣', earned: true, earnedDate: '15 mars 2026' },
+  { id: 'b2', name: 'Série de 3', description: '3 jours consécutifs', icon: '🔥', earned: true, earnedDate: '18 mars 2026' },
+  { id: 'b3', name: 'Série de 7', description: '7 jours consécutifs', icon: '⭐', earned: true, earnedDate: '22 mars 2026' },
+  { id: 'b4', name: 'Perfectionniste', description: 'Score parfait sur une leçon', icon: '💎', earned: true, earnedDate: '20 mars 2026' },
+  { id: 'b5', name: 'Explorateur', description: 'Terminer un module complet', icon: '🌍', earned: false },
+  { id: 'b6', name: 'Polyglotte', description: 'Étudier 2 langues', icon: '🗣️', earned: false },
+  { id: 'b7', name: 'Série de 30', description: '30 jours consécutifs', icon: '🏆', earned: false },
+  { id: 'b8', name: 'Maître', description: '1000 XP total', icon: '👑', earned: false },
+  { id: 'b9', name: 'Marathon', description: '10 leçons en un jour', icon: '🏃', earned: false },
 ]
 
 const stagger = {

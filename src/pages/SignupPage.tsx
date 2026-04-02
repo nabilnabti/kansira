@@ -35,7 +35,7 @@ export default function SignupPage() {
 
     try {
       await signUp(email, password, displayName)
-      navigate('/app')
+      navigate('/onboarding')
     } catch (err: any) {
       setError(err.message || 'Une erreur est survenue lors de l\'inscription.')
     } finally {
@@ -190,14 +190,14 @@ export default function SignupPage() {
               {loading ? (
                 <span className="h-6 w-6 animate-spin rounded-full border-3 border-white/30 border-t-white" />
               ) : (
-                'Cr\u00e9er mon compte'
+                'Créer mon compte'
               )}
             </motion.button>
           </form>
 
           {/* Login link */}
           <p className="mt-6 text-center text-sm text-[#131516]/50">
-            D&eacute;j&agrave; un compte ?{' '}
+            Déjà un compte ?{' '}
             <Link
               to="/login"
               className="font-bold text-[#2D9F4F] transition-colors active:text-[#2D9F4F]/70"

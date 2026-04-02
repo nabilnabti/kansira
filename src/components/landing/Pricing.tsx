@@ -6,7 +6,7 @@ import { Check } from "lucide-react";
 const plans = [
   {
     name: "Gratuit",
-    price: "0\u20ac",
+    price: "0€",
     period: "pour toujours",
     description: "Parfait pour decouvrir l'application",
     features: [
@@ -20,7 +20,7 @@ const plans = [
   },
   {
     name: "Premium",
-    price: "4.99\u20ac",
+    price: "4.99€",
     period: "/mois",
     description: "Acces illimite a tout le contenu",
     features: [

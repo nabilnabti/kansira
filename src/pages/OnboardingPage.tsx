@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { Mascot } from '../components/ui/Mascot'
+import { useAuth } from '../context/AuthContext'
 
 const ONBOARDING_KEY = 'kansira_onboarding_done'
 
@@ -74,22 +75,32 @@ export function isOnboardingDone(): boolean {
   }
 }
 
+export function resetOnboarding() {
+  try {
+    localStorage.removeItem(ONBOARDING_KEY)
+  } catch { /* noop */ }
+}
+
 export default function OnboardingPage() {
   const navigate = useNavigate()
+  const { user } = useAuth()
   const [current, setCurrent] = useState(0)
   const [direction, setDirection] = useState(0)
   const slide = slides[current]
   const isLast = current === slides.length - 1
 
+  // If user is logged in, onboarding ends at /app. Otherwise, /signup.
+  const finishDestination = user ? '/app' : '/signup'
+
   const goNext = useCallback(() => {
     if (isLast) {
       markOnboardingDone()
-      navigate('/signup')
+      navigate(finishDestination)
     } else {
       setDirection(1)
       setCurrent((c) => c + 1)
     }
-  }, [isLast, navigate])
+  }, [isLast, navigate, finishDestination])
 
   const goPrev = useCallback(() => {
     if (current > 0) {
@@ -100,13 +111,13 @@ export default function OnboardingPage() {
 
   const skip = useCallback(() => {
     markOnboardingDone()
-    navigate('/signup')
-  }, [navigate])
+    navigate(finishDestination)
+  }, [navigate, finishDestination])
 
   const goLogin = useCallback(() => {
     markOnboardingDone()
-    navigate('/login')
-  }, [navigate])
+    navigate(user ? '/app' : '/login')
+  }, [navigate, user])
 
   return (
     <div className={`fixed inset-0 bg-gradient-to-b ${slide.bgGradient} flex flex-col`}>
@@ -215,7 +226,7 @@ export default function OnboardingPage() {
           }}
         >
           {isLast ? (
-            "Créer mon compte"
+            user ? "C'est parti !" : "Créer mon compte"
           ) : (
             <>
               Suivant
@@ -224,8 +235,8 @@ export default function OnboardingPage() {
           )}
         </motion.button>
 
-        {/* Login link on last slide */}
-        {isLast && (
+        {/* Login link on last slide — only if not logged in */}
+        {isLast && !user && (
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

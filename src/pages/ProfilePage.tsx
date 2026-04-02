@@ -57,7 +57,7 @@ export default function ProfilePage() {
     .join('')
     .toUpperCase()
 
-  const langEmoji = activeLanguage === 'bm' ? '\uD83C\uDDF2\uD83C\uDDF1' : '\uD83C\uDDF2\uD83C\uDDF1'
+  const langEmoji = activeLanguage === 'bm' ? '🇲🇱' : '🇲🇱'
 
   return (
     <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
@@ -121,14 +121,14 @@ export default function ProfilePage() {
         />
         <StatCard
           icon={Flame}
-          label="S\u00e9rie (jours)"
+          label="Série (jours)"
           value={mockStats.streak}
           bgColor="bg-[#F4A100]"
 
         />
         <StatCard
           icon={BookOpen}
-          label="Le\u00e7ons termin\u00e9es"
+          label="Leçons terminées"
           value={mockStats.lessonsCompleted}
           bgColor="bg-[#131516]"
 
@@ -141,7 +141,7 @@ export default function ProfilePage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         whileTap={{ scale: 0.97 }}
-        onClick={() => alert('Fonctionnalit\u00e9 bient\u00f4t disponible ! (d\u00e9mo)')}
+        onClick={() => alert('Fonctionnalité bientôt disponible ! (démo)')}
         className="w-full h-14 bg-[#FF6B00] text-white font-bold text-base rounded-2xl shadow-lg shadow-[#FF6B00]/25 active:bg-[#e55f00] transition-colors"
       >
         Modifier le profil

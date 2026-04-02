@@ -51,7 +51,7 @@ export default function ResetPasswordPage() {
           Kan Sira
         </h1>
         <p className="mt-1 text-sm font-medium text-[#131516]/50">
-          R&eacute;initialisez votre mot de passe
+          Réinitialisez votre mot de passe
         </p>
       </motion.div>
 
@@ -78,19 +78,19 @@ export default function ResetPasswordPage() {
                 <CheckCircle2 className="h-8 w-8 text-[#2D9F4F]" />
               </motion.div>
               <h2 className="text-lg font-bold text-[#131516]">
-                E-mail envoy&eacute; !
+                E-mail envoyé !
               </h2>
               <p className="text-sm text-[#131516]/50 leading-relaxed">
-                Si un compte est associ&eacute; &agrave;{' '}
+                Si un compte est associé à{' '}
                 <span className="font-semibold text-[#131516]">{email}</span>, vous
-                recevrez un lien de r&eacute;initialisation dans quelques instants.
+                recevrez un lien de réinitialisation dans quelques instants.
               </p>
               <Link
                 to="/login"
                 className="mt-4 inline-flex items-center gap-2 rounded-2xl bg-[#FF6B00] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#FF6B00]/25 transition-colors active:bg-[#e55f00]"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Retour &agrave; la connexion
+                Retour à la connexion
               </Link>
             </motion.div>
           ) : (
@@ -112,7 +112,7 @@ export default function ResetPasswordPage() {
 
               <p className="text-sm text-[#131516]/50 mb-5 leading-relaxed">
                 Entrez votre adresse e-mail et nous vous enverrons un lien pour
-                r&eacute;initialiser votre mot de passe.
+                réinitialiser votre mot de passe.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-5">
@@ -148,7 +148,7 @@ export default function ResetPasswordPage() {
                   {loading ? (
                     <span className="h-6 w-6 animate-spin rounded-full border-3 border-white/30 border-t-white" />
                   ) : (
-                    'R\u00e9initialiser'
+                    'Réinitialiser'
                   )}
                 </motion.button>
               </form>
@@ -160,7 +160,7 @@ export default function ResetPasswordPage() {
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-[#2D9F4F] transition-colors active:text-[#2D9F4F]/70"
                 >
                   <ArrowLeft className="h-4 w-4" />
-                  Retour &agrave; la connexion
+                  Retour à la connexion
                 </Link>
               </p>
             </>

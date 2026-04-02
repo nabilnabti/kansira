@@ -4,20 +4,20 @@ import { Crown, Check, Zap, BookOpen, Headphones, Shield, Sparkles } from 'lucid
 import { Mascot } from '../components/ui/Mascot'
 
 const features = [
-  { icon: BookOpen, label: 'Tous les modules et le\u00e7ons', free: false, premium: true },
+  { icon: BookOpen, label: 'Tous les modules et leçons', free: false, premium: true },
   { icon: Headphones, label: 'Audio par des natifs', free: false, premium: true },
-  { icon: Zap, label: 'Exercices illimit\u00e9s', free: false, premium: true },
+  { icon: Zap, label: 'Exercices illimités', free: false, premium: true },
   { icon: Shield, label: 'Mode hors-ligne', free: false, premium: true },
   { icon: BookOpen, label: '2 modules gratuits', free: true, premium: true },
   { icon: Zap, label: '5 exercices par jour', free: true, premium: false },
 ]
 
 const benefits = [
-  { icon: '\uD83C\uDF1F', text: 'Acc\u00e8s \u00e0 toutes les langues et tous les modules' },
-  { icon: '\uD83C\uDFA7', text: 'Audio enregistr\u00e9 par des locuteurs natifs' },
-  { icon: '\uD83D\uDCF1', text: 'T\u00e9l\u00e9chargez les le\u00e7ons pour apprendre hors-ligne' },
-  { icon: '\uD83C\uDFC6', text: 'Badges et d\u00e9fis exclusifs' },
-  { icon: '\uD83D\uDE80', text: 'Progressez 3x plus vite' },
+  { icon: '🌟', text: 'Accès à toutes les langues et tous les modules' },
+  { icon: '🎧', text: 'Audio enregistré par des locuteurs natifs' },
+  { icon: '📱', text: 'Téléchargez les leçons pour apprendre hors-ligne' },
+  { icon: '🏆', text: 'Badges et défis exclusifs' },
+  { icon: '🚀', text: 'Progressez 3x plus vite' },
 ]
 
 export default function PremiumPage() {
@@ -68,7 +68,7 @@ export default function PremiumPage() {
           Kan Sira Premium
         </h1>
         <p className="text-sm opacity-90 leading-relaxed max-w-[280px] mx-auto">
-          D\u00e9bloquez l'exp\u00e9rience compl\u00e8te et ma\u00eetrisez les langues africaines sans limites.
+          Débloquez l'expérience complète et maîtrisez les langues africaines sans limites.
         </p>
       </motion.div>
 
@@ -107,16 +107,16 @@ export default function PremiumPage() {
           </p>
           <div className="flex items-baseline justify-center gap-1">
             <span className="text-5xl font-extrabold text-[#131516]">4,99</span>
-            <span className="text-lg font-medium text-[#131516]/40">\u20AC/mois</span>
+            <span className="text-lg font-medium text-[#131516]/40">€/mois</span>
           </div>
-          <p className="text-xs text-[#131516]/40 mt-1.5">Annulez \u00e0 tout moment</p>
+          <p className="text-xs text-[#131516]/40 mt-1.5">Annulez à tout moment</p>
         </div>
 
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => {
-            alert('Premium activ\u00e9 ! (d\u00e9mo)')
+            alert('Premium activé ! (démo)')
             navigate('/app')
           }}
           className="w-full h-14 bg-[#FF6B00] text-white font-bold text-base rounded-2xl shadow-lg shadow-[#FF6B00]/30 active:bg-[#e55f00] transition-colors"
@@ -133,7 +133,7 @@ export default function PremiumPage() {
         className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#131516]/5"
       >
         <div className="grid grid-cols-3 bg-[#FFF3E0]/50 px-4 py-3.5 border-b border-[#131516]/5">
-          <span className="text-xs font-bold text-[#131516]/50">Fonctionnalit\u00e9</span>
+          <span className="text-xs font-bold text-[#131516]/50">Fonctionnalité</span>
           <span className="text-xs font-bold text-[#131516]/50 text-center">Gratuit</span>
           <span className="text-xs font-bold text-[#FF6B00] text-center">Premium</span>
         </div>
@@ -147,14 +147,14 @@ export default function PremiumPage() {
               {f.free ? (
                 <Check size={16} className="text-[#2D9F4F]" />
               ) : (
-                <span className="text-[#131516]/15 text-sm">\u2014</span>
+                <span className="text-[#131516]/15 text-sm">—</span>
               )}
             </div>
             <div className="flex justify-center">
               {f.premium ? (
                 <Check size={16} className="text-[#FF6B00]" />
               ) : (
-                <span className="text-[#131516]/15 text-sm">\u2014</span>
+                <span className="text-[#131516]/15 text-sm">—</span>
               )}
             </div>
           </div>
