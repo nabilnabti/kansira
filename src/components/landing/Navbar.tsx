@@ -4,12 +4,6 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Mascot } from "../ui/Mascot";
 
-const navLinks = [
-  { label: "Fonctionnalités", href: "#features" },
-  { label: "Comment ça marche", href: "#how-it-works" },
-  { label: "Tarifs", href: "#pricing" },
-];
-
 export default function Navbar() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
@@ -21,18 +15,12 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleClick = (href: string) => {
-    setMobileOpen(false);
-    const el = document.querySelector(href);
-    el?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+          ? "bg-white shadow-md"
+          : "bg-white"
       }`}
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -50,28 +38,19 @@ export default function Navbar() {
             Kan Sira
           </a>
 
-          {/* Desktop links */}
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <button
-                key={link.href}
-                onClick={() => handleClick(link.href)}
-                className="text-sm font-medium text-dark/70 hover:text-primary transition-colors cursor-pointer"
-              >
-                {link.label}
-              </button>
-            ))}
+          {/* Desktop CTA */}
+          <div className="hidden md:flex items-center gap-4">
             <button
               onClick={() => navigate("/login")}
-              className="text-sm font-medium text-dark/70 hover:text-primary transition-colors cursor-pointer"
+              className="text-sm font-bold text-dark/60 hover:text-primary transition-colors cursor-pointer uppercase tracking-wider"
             >
-              Se connecter
+              J'ai deja un compte
             </button>
             <button
               onClick={() => navigate("/signup")}
-              className="bg-primary hover:bg-primary-dark text-white rounded-full px-6 py-2 text-sm font-semibold transition-colors cursor-pointer"
+              className="btn-3d-green bg-secondary hover:bg-secondary-light text-white rounded-2xl px-6 py-2.5 text-sm font-bold uppercase tracking-wider cursor-pointer"
             >
-              Commencer
+              C'est parti !
             </button>
           </div>
 
@@ -93,29 +72,20 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 overflow-hidden"
+            className="md:hidden bg-white border-t border-gray-100 overflow-hidden"
           >
             <div className="px-4 py-4 flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleClick(link.href)}
-                  className="text-left text-sm font-medium text-dark/70 hover:text-primary transition-colors py-2 cursor-pointer"
-                >
-                  {link.label}
-                </button>
-              ))}
               <button
                 onClick={() => { setMobileOpen(false); navigate("/login"); }}
-                className="text-left text-sm font-medium text-dark/70 hover:text-primary transition-colors py-2 cursor-pointer"
+                className="text-left text-sm font-bold text-dark/60 hover:text-primary transition-colors py-2 cursor-pointer uppercase tracking-wider"
               >
-                Se connecter
+                J'ai deja un compte
               </button>
               <button
                 onClick={() => { setMobileOpen(false); navigate("/signup"); }}
-                className="bg-primary hover:bg-primary-dark text-white rounded-full px-6 py-2.5 text-sm font-semibold transition-colors mt-2 cursor-pointer"
+                className="btn-3d-green bg-secondary hover:bg-secondary-light text-white rounded-2xl px-6 py-3 text-sm font-bold uppercase tracking-wider cursor-pointer"
               >
-                Commencer
+                C'est parti !
               </button>
             </div>
           </motion.div>

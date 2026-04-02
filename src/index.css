@@ -13,6 +13,8 @@
   --color-dark-light: #242A2E;
   --color-accent: #E63946;
   --color-gold: #F4A100;
+  --color-blue-light: #E8F4FD;
+  --color-blue-dark: #1B3A5C;
   --font-body: 'Poppins', sans-serif;
   --font-heading: 'Roboto', sans-serif;
 }
@@ -32,4 +34,39 @@ h1, h2, h3, h4, h5, h6 {
 
 #root {
   min-height: 100svh;
+}
+
+/* Bouton 3D style Duolingo */
+.btn-3d-primary {
+  border-bottom: 4px solid var(--color-primary-dark);
+  transition: all 0.1s;
+}
+.btn-3d-primary:active {
+  border-bottom-width: 0;
+  transform: translateY(4px);
+}
+.btn-3d-green {
+  border-bottom: 4px solid var(--color-secondary-dark);
+  transition: all 0.1s;
+}
+.btn-3d-green:active {
+  border-bottom-width: 0;
+  transform: translateY(4px);
+}
+.btn-3d-white {
+  border-bottom: 4px solid #e0e0e0;
+  transition: all 0.1s;
+}
+.btn-3d-white:active {
+  border-bottom-width: 0;
+  transform: translateY(4px);
+}
+
+/* Premium card glow */
+@keyframes premium-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 0, 0.5); }
+}
+.premium-glow {
+  animation: premium-glow 3s ease-in-out infinite;
 }

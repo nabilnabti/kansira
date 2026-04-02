@@ -82,7 +82,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ user, profile }))
   }, [])
 
-  const signUp = async (email: string, password: string, displayName: string) => {
+  const signUp = async (email: string, _password: string, displayName: string) => {
     await delay(800)
     const { user, profile } = buildMockSession(email, displayName)
     persistSession(user, profile)
