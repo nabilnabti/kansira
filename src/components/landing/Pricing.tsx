@@ -8,28 +8,28 @@ const plans = [
     name: "Gratuit",
     price: "0\u20ac",
     period: "pour toujours",
-    description: "Parfait pour découvrir l'application",
+    description: "Parfait pour decouvrir l'application",
     features: [
       "Module 1 gratuit",
-      "5 leçons complètes",
-      "Exercices variés",
+      "5 lecons completes",
+      "Exercices varies",
       "Audio natif",
     ],
-    cta: "Commencer gratuitement",
+    cta: "COMMENCER GRATUITEMENT",
     popular: false,
   },
   {
     name: "Premium",
     price: "4.99\u20ac",
     period: "/mois",
-    description: "Accès illimité à tout le contenu",
+    description: "Acces illimite a tout le contenu",
     features: [
       "Tout le contenu",
-      "100+ leçons",
+      "100+ lecons",
       "Badges exclusifs",
       "Support prioritaire",
     ],
-    cta: "Essayer Premium",
+    cta: "ESSAYER PREMIUM",
     popular: true,
   },
 ];
@@ -40,7 +40,7 @@ export default function Pricing() {
   const isInView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="pricing" className="py-20 bg-white" ref={ref}>
+    <section id="pricing" className="py-24 md:py-32 bg-background/30" ref={ref}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -48,11 +48,11 @@ export default function Pricing() {
           transition={{ duration: 0.6 }}
           className="text-center mb-14"
         >
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-dark">
-            Des tarifs simples et accessibles
+          <h2 className="font-heading text-4xl md:text-5xl font-black text-primary lowercase">
+            des tarifs simples
           </h2>
-          <p className="mt-4 text-dark/50 max-w-2xl mx-auto">
-            Commencez gratuitement et passez au Premium quand vous êtes prêt.
+          <p className="mt-4 text-dark/50 max-w-2xl mx-auto text-lg">
+            Commence gratuitement et passe au Premium quand tu es pret.
           </p>
         </motion.div>
 
@@ -66,13 +66,13 @@ export default function Pricing() {
               whileHover={{ y: -6, transition: { duration: 0.25 } }}
               className={`relative rounded-3xl p-8 ${
                 plan.popular
-                  ? "bg-primary text-white shadow-xl shadow-primary/20"
+                  ? "bg-primary text-white shadow-xl premium-glow"
                   : "bg-white border-2 border-gray-100 hover:border-primary/20"
               }`}
             >
               {/* Popular badge */}
               {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gold text-dark text-xs font-bold px-4 py-1 rounded-full shadow-md">
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-gold text-dark text-xs font-bold px-4 py-1 rounded-full shadow-md uppercase tracking-wider">
                   Populaire
                 </div>
               )}
@@ -142,13 +142,13 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              {/* CTA */}
+              {/* 3D CTA Button */}
               <button
                 onClick={() => navigate('/signup')}
-                className={`w-full rounded-xl py-3.5 text-sm font-semibold transition-all cursor-pointer ${
+                className={`w-full rounded-2xl py-3.5 text-sm font-bold uppercase tracking-wider cursor-pointer transition-all ${
                   plan.popular
-                    ? "bg-white text-primary hover:bg-white/90 shadow-md"
-                    : "bg-primary text-white hover:bg-primary-dark"
+                    ? "bg-white text-primary btn-3d-white"
+                    : "bg-primary text-white btn-3d-primary"
                 }`}
               >
                 {plan.cta}

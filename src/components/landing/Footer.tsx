@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Mascot } from "../ui/Mascot";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -16,12 +17,15 @@ export default function Footer() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
-            <span className="font-heading text-xl font-bold text-primary">
-              Kan Sira
-            </span>
+            <div className="flex items-center gap-2">
+              <Mascot size={32} expression="happy" />
+              <span className="font-heading text-xl font-bold text-primary">
+                Kan Sira
+              </span>
+            </div>
             <p className="mt-3 text-sm text-white/40 leading-relaxed max-w-xs">
-              Apprenez le Bambara et le Soninké de manière ludique et
-              interactive, où que vous soyez.
+              Apprends le Bambara et le Soninke de maniere ludique et
+              interactive, ou que tu sois.
             </p>
           </div>
 
@@ -33,7 +37,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {[
                 { label: "Accueil", href: "#" },
-                { label: "Fonctionnalités", href: "#features" },
+                { label: "Fonctionnalites", href: "#features" },
                 { label: "Tarifs", href: "#pricing" },
                 { label: "Contact", href: "#cta" },
               ].map((link) => (
@@ -60,10 +64,10 @@ export default function Footer() {
           {/* Legal */}
           <div>
             <h4 className="font-heading font-bold text-sm uppercase tracking-wider text-white/60 mb-4">
-              Légal
+              Legal
             </h4>
             <ul className="space-y-2.5">
-              {["Mentions légales", "Politique de confidentialité"].map(
+              {["Mentions legales", "Politique de confidentialite"].map(
                 (link) => (
                   <li key={link}>
                     <a
@@ -90,7 +94,7 @@ export default function Footer() {
               </li>
               <li className="text-sm text-white/40">
                 <span className="mr-2">{"\ud83c\uddf2\ud83c\uddf1"}</span>
-                Soninké
+                Soninke
               </li>
             </ul>
           </div>
@@ -99,7 +103,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/30">
-            &copy; 2024 Kan Sira. Tous droits réservés.
+            &copy; 2024 Kan Sira. Tous droits reserves.
           </p>
           <div className="flex items-center gap-1 text-sm text-white/30">
             Fait avec
