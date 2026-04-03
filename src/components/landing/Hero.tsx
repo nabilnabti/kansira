@@ -73,8 +73,8 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="font-heading text-4xl sm:text-5xl md:text-6xl font-black text-dark leading-tight"
             >
-              La methode{" "}
-              <span className="text-primary">gratuite</span>,{" "}
+              La méthode{" "}
+              <span className="text-primary">simple</span>,{" "}
               <span className="text-secondary">fun</span> et{" "}
               <span className="text-gold">efficace</span>{" "}
               pour apprendre le{" "}

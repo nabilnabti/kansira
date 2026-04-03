@@ -17,7 +17,7 @@ export default function LanguageShowcase() {
             transition={{ duration: 0.7 }}
           >
             <h2 className="font-heading text-5xl md:text-6xl font-black text-primary lowercase leading-tight">
-              gratuit. fun. efficace.
+              simple. fun. efficace.
             </h2>
             <p className="mt-6 text-lg text-dark/60 leading-relaxed max-w-lg">
               Apprendre avec Kan Sira, c'est fun, et en plus ca marche vraiment !
