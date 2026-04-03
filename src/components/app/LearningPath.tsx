@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Crown, Lock, Check, Play, ChevronRight, ChevronLeft, Flame, Star, BarChart3 } from 'lucide-react'
+import { Crown, Lock, Check, Play, ChevronRight, ChevronLeft, Flame, Star, BarChart3, Grid3X3, X } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { Mascot } from '../ui/Mascot'
 import DailyGoal from './DailyGoal'
 
@@ -21,50 +22,172 @@ interface ModuleData {
   title: string
   description: string
   isFree: boolean
+  lang: 'bm' | 'snk'
   lessons: LessonData[]
 }
 
-const mockModules: ModuleData[] = [
+const allModules: ModuleData[] = [
+  // Bambara modules
   {
-    id: 'm1',
-    icon: '\u{1F44B}',
+    id: 'bm-m1',
+    icon: '👋',
     title: 'Salutations & Bases',
-    description: 'Les salutations essentielles',
+    description: 'Les salutations essentielles en Bambara',
     isFree: true,
+    lang: 'bm',
     lessons: [
-      { id: 'l1', title: 'Dire bonjour', emoji: '\u{1F44B}', status: 'available' },
-      { id: 'l2', title: 'Se présenter', emoji: '\u{1F64B}', status: 'locked' },
-      { id: 'l3', title: 'Comment ça va ?', emoji: '\u{1F4AC}', status: 'locked' },
-      { id: 'l4', title: 'La politesse', emoji: '\u{1F64F}', status: 'locked' },
-      { id: 'l5', title: 'Au revoir', emoji: '\u{1F44B}', status: 'locked' },
+      { id: 'l1', title: 'Dire bonjour', emoji: '👋', status: 'available' },
+      { id: 'l2', title: 'Se présenter', emoji: '🙋', status: 'locked' },
+      { id: 'l3', title: 'Comment ça va ?', emoji: '💬', status: 'locked' },
+      { id: 'l4', title: 'La politesse', emoji: '🙏', status: 'locked' },
+      { id: 'l5', title: 'Au revoir', emoji: '👋', status: 'locked' },
     ],
   },
   {
-    id: 'm2',
-    icon: '\u{1F468}‍\u{1F469}‍\u{1F467}‍\u{1F466}',
+    id: 'bm-m2',
+    icon: '👨‍👩‍👧‍👦',
     title: 'La Famille',
     description: 'Les membres de la famille',
     isFree: false,
+    lang: 'bm',
     lessons: [
-      { id: 'l6', title: 'Les parents', emoji: '\u{1F468}‍\u{1F469}‍\u{1F467}', status: 'premium_locked' },
-      { id: 'l7', title: 'Frères et sœurs', emoji: '\u{1F46B}', status: 'premium_locked' },
-      { id: 'l8', title: 'Les grands-parents', emoji: '\u{1F474}', status: 'premium_locked' },
-      { id: 'l9', title: 'Oncles et tantes', emoji: '\u{1F468}‍\u{1F467}', status: 'premium_locked' },
-      { id: 'l10', title: 'Ma famille', emoji: '\u{1F3E0}', status: 'premium_locked' },
+      { id: 'l6', title: 'Les parents', emoji: '👨‍👩‍👧', status: 'premium_locked' },
+      { id: 'l7', title: 'Frères et sœurs', emoji: '👫', status: 'premium_locked' },
+      { id: 'l8', title: 'Les grands-parents', emoji: '👴', status: 'premium_locked' },
+      { id: 'l9', title: 'Oncles et tantes', emoji: '👨‍👧', status: 'premium_locked' },
+      { id: 'l10', title: 'Ma famille', emoji: '🏠', status: 'premium_locked' },
     ],
   },
   {
-    id: 'm3',
-    icon: '\u{1F522}',
+    id: 'bm-m3',
+    icon: '🔢',
     title: 'Les Nombres',
     description: 'Compter en Bambara',
     isFree: false,
+    lang: 'bm',
     lessons: [
       { id: 'l11', title: '1 à 5', emoji: '1️⃣', status: 'premium_locked' },
-      { id: 'l12', title: '6 à 10', emoji: '\u{1F51F}', status: 'premium_locked' },
-      { id: 'l13', title: '11 à 20', emoji: '\u{1F522}', status: 'premium_locked' },
-      { id: 'l14', title: 'Les dizaines', emoji: '\u{1F4AF}', status: 'premium_locked' },
-      { id: 'l15', title: 'Compter', emoji: '\u{1F9EE}', status: 'premium_locked' },
+      { id: 'l12', title: '6 à 10', emoji: '🔟', status: 'premium_locked' },
+      { id: 'l13', title: '11 à 20', emoji: '🔢', status: 'premium_locked' },
+      { id: 'l14', title: 'Les dizaines', emoji: '💯', status: 'premium_locked' },
+      { id: 'l15', title: 'Compter', emoji: '🧮', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'bm-m4',
+    icon: '🍎',
+    title: 'Nourriture',
+    description: 'Les aliments et les repas',
+    isFree: false,
+    lang: 'bm',
+    lessons: [
+      { id: 'l16', title: 'Les fruits', emoji: '🥭', status: 'premium_locked' },
+      { id: 'l17', title: 'Les légumes', emoji: '🥬', status: 'premium_locked' },
+      { id: 'l18', title: 'Les repas', emoji: '🍽️', status: 'premium_locked' },
+      { id: 'l19', title: 'Au marché', emoji: '🏪', status: 'premium_locked' },
+      { id: 'l20', title: 'Les boissons', emoji: '🥤', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'bm-m5',
+    icon: '🎨',
+    title: 'Les Couleurs',
+    description: 'Les couleurs en Bambara',
+    isFree: false,
+    lang: 'bm',
+    lessons: [
+      { id: 'l21', title: 'Rouge, bleu, jaune', emoji: '🔴', status: 'premium_locked' },
+      { id: 'l22', title: 'Vert, orange, violet', emoji: '🟢', status: 'premium_locked' },
+      { id: 'l23', title: 'Noir et blanc', emoji: '⬛', status: 'premium_locked' },
+      { id: 'l24', title: 'Décrire les couleurs', emoji: '🌈', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'bm-m6',
+    icon: '🏠',
+    title: 'La Maison',
+    description: 'Les pièces et objets de la maison',
+    isFree: false,
+    lang: 'bm',
+    lessons: [
+      { id: 'l25', title: 'Les pièces', emoji: '🚪', status: 'premium_locked' },
+      { id: 'l26', title: 'Les meubles', emoji: '🪑', status: 'premium_locked' },
+      { id: 'l27', title: 'La cuisine', emoji: '🍳', status: 'premium_locked' },
+      { id: 'l28', title: 'Le jardin', emoji: '🌿', status: 'premium_locked' },
+    ],
+  },
+  // Soninké modules
+  {
+    id: 'snk-m1',
+    icon: '👋',
+    title: 'Salutations & Bases',
+    description: 'Les salutations essentielles en Soninké',
+    isFree: true,
+    lang: 'snk',
+    lessons: [
+      { id: 'sl1', title: 'Dire bonjour', emoji: '👋', status: 'available' },
+      { id: 'sl2', title: 'Se présenter', emoji: '🙋', status: 'locked' },
+      { id: 'sl3', title: 'Comment ça va ?', emoji: '💬', status: 'locked' },
+      { id: 'sl4', title: 'La politesse', emoji: '🙏', status: 'locked' },
+      { id: 'sl5', title: 'Au revoir', emoji: '👋', status: 'locked' },
+    ],
+  },
+  {
+    id: 'snk-m2',
+    icon: '👨‍👩‍👧‍👦',
+    title: 'La Famille',
+    description: 'Les membres de la famille en Soninké',
+    isFree: false,
+    lang: 'snk',
+    lessons: [
+      { id: 'sl6', title: 'Les parents', emoji: '👨‍👩‍👧', status: 'premium_locked' },
+      { id: 'sl7', title: 'Frères et sœurs', emoji: '👫', status: 'premium_locked' },
+      { id: 'sl8', title: 'Les grands-parents', emoji: '👴', status: 'premium_locked' },
+      { id: 'sl9', title: 'Oncles et tantes', emoji: '👨‍👧', status: 'premium_locked' },
+      { id: 'sl10', title: 'Ma famille', emoji: '🏠', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'snk-m3',
+    icon: '🔢',
+    title: 'Les Nombres',
+    description: 'Compter en Soninké',
+    isFree: false,
+    lang: 'snk',
+    lessons: [
+      { id: 'sl11', title: '1 à 5', emoji: '1️⃣', status: 'premium_locked' },
+      { id: 'sl12', title: '6 à 10', emoji: '🔟', status: 'premium_locked' },
+      { id: 'sl13', title: '11 à 20', emoji: '🔢', status: 'premium_locked' },
+      { id: 'sl14', title: 'Les dizaines', emoji: '💯', status: 'premium_locked' },
+      { id: 'sl15', title: 'Compter', emoji: '🧮', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'snk-m4',
+    icon: '🍎',
+    title: 'Nourriture',
+    description: 'Les aliments et les repas en Soninké',
+    isFree: false,
+    lang: 'snk',
+    lessons: [
+      { id: 'sl16', title: 'Les fruits', emoji: '🥭', status: 'premium_locked' },
+      { id: 'sl17', title: 'Les légumes', emoji: '🥬', status: 'premium_locked' },
+      { id: 'sl18', title: 'Les repas', emoji: '🍽️', status: 'premium_locked' },
+      { id: 'sl19', title: 'Au marché', emoji: '🏪', status: 'premium_locked' },
+    ],
+  },
+  {
+    id: 'snk-m5',
+    icon: '🐘',
+    title: 'Les Animaux',
+    description: 'Les animaux en Soninké',
+    isFree: false,
+    lang: 'snk',
+    lessons: [
+      { id: 'sl20', title: 'Animaux domestiques', emoji: '🐔', status: 'premium_locked' },
+      { id: 'sl21', title: 'Animaux sauvages', emoji: '🦁', status: 'premium_locked' },
+      { id: 'sl22', title: 'Animaux de la ferme', emoji: '🐄', status: 'premium_locked' },
+      { id: 'sl23', title: 'Insectes', emoji: '🦋', status: 'premium_locked' },
     ],
   },
 ]
@@ -330,10 +453,137 @@ function StatsPills() {
   )
 }
 
-function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
+function LanguageSwitcher() {
+  const { activeLanguage, setActiveLanguage } = useLanguage()
+
+  return (
+    <div className="flex items-center bg-white rounded-full p-1 shadow-sm border border-gray-100">
+      {([
+        { code: 'bm' as const, label: 'Bambara', flag: '🇲🇱' },
+        { code: 'snk' as const, label: 'Soninké', flag: '🇲🇱' },
+      ]).map((lang) => {
+        const isActive = activeLanguage === lang.code
+        return (
+          <motion.button
+            key={lang.code}
+            onClick={() => setActiveLanguage(lang.code)}
+            whileTap={{ scale: 0.95 }}
+            className={`
+              relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold cursor-pointer transition-colors duration-200
+              ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-700'}
+            `}
+          >
+            {isActive && (
+              <motion.div
+                layoutId="langSwitch"
+                className="absolute inset-0 bg-primary rounded-full"
+                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className="relative z-10 text-xs">{lang.flag}</span>
+            <span className="relative z-10">{lang.label}</span>
+          </motion.button>
+        )
+      })}
+    </div>
+  )
+}
+
+function AllThemesModal({
+  modules,
+  onClose,
+  onSelect,
+}: {
+  modules: ModuleData[]
+  onClose: () => void
+  onSelect: (index: number) => void
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end md:items-center justify-center"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white rounded-t-3xl md:rounded-3xl w-full max-w-lg max-h-[80vh] overflow-hidden flex flex-col"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 pt-5 pb-3">
+          <h2 className="text-lg font-bold text-dark">Tous les thèmes</h2>
+          <button
+            onClick={onClose}
+            className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+          >
+            <X size={18} className="text-gray-500" />
+          </button>
+        </div>
+
+        {/* Grid */}
+        <div className="flex-1 overflow-y-auto px-5 pb-5">
+          <div className="grid grid-cols-2 gap-3">
+            {modules.map((mod, i) => {
+              const completedCount = mod.lessons.filter((l) => l.status === 'completed').length
+              const totalCount = mod.lessons.length
+              return (
+                <motion.button
+                  key={mod.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.04 }}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => {
+                    onSelect(i)
+                    onClose()
+                  }}
+                  className={`
+                    flex flex-col items-center gap-2 p-4 rounded-2xl border-2 cursor-pointer transition-colors text-center
+                    ${!mod.isFree ? 'border-amber-200/60 bg-amber-50/30' : 'border-gray-100 bg-white hover:border-primary/30'}
+                  `}
+                >
+                  <span className="text-3xl">{mod.icon}</span>
+                  <span className="text-sm font-bold text-dark leading-tight">{mod.title}</span>
+                  <div className="flex items-center gap-1">
+                    {!mod.isFree && <Crown size={10} className="text-amber-500" />}
+                    <span className="text-xs text-gray-400">
+                      {completedCount}/{totalCount} leçons
+                    </span>
+                  </div>
+                  {/* Mini progress */}
+                  <div className="w-full h-1 rounded-full bg-gray-100 overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-secondary"
+                      style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` }}
+                    />
+                  </div>
+                </motion.button>
+              )
+            })}
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
+  )
+}
+
+function ModuleCarousel({ modules, onShowAll, goToIndex }: { modules: ModuleData[]; onShowAll: () => void; goToIndex?: number | null }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
   const isScrolling = useRef(false)
+
+  // Reset to first slide when modules change (language switch)
+  useEffect(() => {
+    setActiveIndex(0)
+    if (scrollRef.current) scrollRef.current.scrollLeft = 0
+  }, [modules.map((m) => m.id).join()])
 
   const scrollToIndex = useCallback((index: number) => {
     const container = scrollRef.current
@@ -370,15 +620,26 @@ function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
     }
   }, [activeIndex, modules.length])
 
+  // Navigate when goToIndex changes (from modal selection)
+  useEffect(() => {
+    if (goToIndex != null && goToIndex >= 0 && goToIndex < modules.length) {
+      scrollToIndex(goToIndex)
+    }
+  }, [goToIndex, modules.length, scrollToIndex])
+
   const goTo = (index: number) => {
     if (index >= 0 && index < modules.length) scrollToIndex(index)
   }
 
+  // Show max 3 tabs, then "all" button
+  const visibleTabs = modules.slice(0, 3)
+  const hasMore = modules.length > 3
+
   return (
     <div className="relative">
-      {/* Module tab bar */}
+      {/* Module tab bar + "Tous" button */}
       <div className="flex items-center gap-2 mb-4 px-1 overflow-x-auto scrollbar-hide">
-        {modules.map((mod, i) => {
+        {visibleTabs.map((mod, i) => {
           const isActive = i === activeIndex
           return (
             <motion.button
@@ -389,7 +650,7 @@ function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
                 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer transition-all duration-200 shrink-0
                 ${isActive
                   ? 'bg-primary text-white shadow-md shadow-primary/25'
-                  : 'bg-white text-gray-600 border border-gray-150 hover:bg-gray-50'
+                  : 'bg-white text-gray-600 border border-gray-100 hover:bg-gray-50'
                 }
                 ${!mod.isFree && !isActive ? 'opacity-60' : ''}
               `}
@@ -400,6 +661,15 @@ function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
             </motion.button>
           )
         })}
+        {/* "Voir tout" button always visible */}
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={onShowAll}
+          className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors shrink-0"
+        >
+          <Grid3X3 size={14} />
+          Tout voir
+        </motion.button>
       </div>
 
       {/* Carousel container */}
@@ -426,7 +696,6 @@ function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
         <div
           ref={scrollRef}
           className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-1"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {modules.map((mod, mi) => (
             <div
@@ -461,15 +730,33 @@ function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
 
 export default function LearningPath() {
   const { profile } = useAuth()
+  const { activeLanguage } = useLanguage()
   const firstName = profile?.display_name?.split(' ')[0] || 'Apprenant'
+  const [showAllThemes, setShowAllThemes] = useState(false)
+  const [carouselGoTo, setCarouselGoTo] = useState<number | null>(null)
+
+  // Filter modules by active language
+  const modules = allModules.filter((m) => m.lang === activeLanguage)
+
+  const handleSelectFromModal = (index: number) => {
+    setCarouselGoTo(index)
+  }
+
+  // Reset carouselGoTo after it's consumed
+  useEffect(() => {
+    if (carouselGoTo !== null) {
+      const t = setTimeout(() => setCarouselGoTo(null), 100)
+      return () => clearTimeout(t)
+    }
+  }, [carouselGoTo])
 
   return (
     <div className="max-w-md mx-auto pb-28 md:pb-8">
-      {/* Welcome section with mascot */}
+      {/* Welcome + language switcher */}
       <motion.div
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-4 mb-5 px-1"
+        className="flex items-center gap-4 mb-4 px-1"
       >
         <motion.div
           initial={{ scale: 0, rotate: -20 }}
@@ -498,6 +785,16 @@ export default function LearningPath() {
         </div>
       </motion.div>
 
+      {/* Language switcher */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.15 }}
+        className="flex justify-center mb-4"
+      >
+        <LanguageSwitcher />
+      </motion.div>
+
       {/* Stats pills */}
       <StatsPills />
 
@@ -512,10 +809,36 @@ export default function LearningPath() {
       </motion.div>
 
       {/* Module carousel */}
-      <ModuleCarousel modules={mockModules} />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeLanguage}
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+          transition={{ duration: 0.25 }}
+        >
+          <ModuleCarousel
+            modules={modules}
+            onShowAll={() => setShowAllThemes(true)}
+            goToIndex={carouselGoTo}
+            key={activeLanguage}
+          />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Premium banner */}
       <PremiumBanner />
+
+      {/* All themes modal */}
+      <AnimatePresence>
+        {showAllThemes && (
+          <AllThemesModal
+            modules={modules}
+            onClose={() => setShowAllThemes(false)}
+            onSelect={handleSelectFromModal}
+          />
+        )}
+      </AnimatePresence>
     </div>
   )
 }
