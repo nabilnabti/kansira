@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion'
+import { useState, useRef, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Crown, Lock, Check, Play, ChevronRight, Flame, Star, BarChart3 } from 'lucide-react'
+import { Crown, Lock, Check, Play, ChevronRight, ChevronLeft, Flame, Star, BarChart3 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { Mascot } from '../ui/Mascot'
 import DailyGoal from './DailyGoal'
@@ -329,11 +330,138 @@ function StatsPills() {
   )
 }
 
+function ModuleCarousel({ modules }: { modules: ModuleData[] }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const isScrolling = useRef(false)
+
+  const scrollToIndex = useCallback((index: number) => {
+    const container = scrollRef.current
+    if (!container) return
+    const child = container.children[index] as HTMLElement | undefined
+    if (!child) return
+    isScrolling.current = true
+    child.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+    setActiveIndex(index)
+    setTimeout(() => { isScrolling.current = false }, 400)
+  }, [])
+
+  // Sync active index on scroll (snap detection)
+  useEffect(() => {
+    const container = scrollRef.current
+    if (!container) return
+    let timer: ReturnType<typeof setTimeout>
+    const handleScroll = () => {
+      if (isScrolling.current) return
+      clearTimeout(timer)
+      timer = setTimeout(() => {
+        const scrollLeft = container.scrollLeft
+        const width = container.clientWidth
+        const newIndex = Math.round(scrollLeft / width)
+        if (newIndex !== activeIndex && newIndex >= 0 && newIndex < modules.length) {
+          setActiveIndex(newIndex)
+        }
+      }, 60)
+    }
+    container.addEventListener('scroll', handleScroll, { passive: true })
+    return () => {
+      container.removeEventListener('scroll', handleScroll)
+      clearTimeout(timer)
+    }
+  }, [activeIndex, modules.length])
+
+  const goTo = (index: number) => {
+    if (index >= 0 && index < modules.length) scrollToIndex(index)
+  }
+
+  return (
+    <div className="relative">
+      {/* Module tab bar */}
+      <div className="flex items-center gap-2 mb-4 px-1 overflow-x-auto scrollbar-hide">
+        {modules.map((mod, i) => {
+          const isActive = i === activeIndex
+          return (
+            <motion.button
+              key={mod.id}
+              onClick={() => goTo(i)}
+              whileTap={{ scale: 0.95 }}
+              className={`
+                flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap cursor-pointer transition-all duration-200 shrink-0
+                ${isActive
+                  ? 'bg-primary text-white shadow-md shadow-primary/25'
+                  : 'bg-white text-gray-600 border border-gray-150 hover:bg-gray-50'
+                }
+                ${!mod.isFree && !isActive ? 'opacity-60' : ''}
+              `}
+            >
+              <span className="text-base">{mod.icon}</span>
+              {mod.title}
+              {!mod.isFree && <Crown size={12} className={isActive ? 'text-white/80' : 'text-amber-500'} />}
+            </motion.button>
+          )
+        })}
+      </div>
+
+      {/* Carousel container */}
+      <div className="relative">
+        {/* Left/right arrows on desktop */}
+        {activeIndex > 0 && (
+          <button
+            onClick={() => goTo(activeIndex - 1)}
+            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-100 items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+          >
+            <ChevronLeft size={20} className="text-gray-600" />
+          </button>
+        )}
+        {activeIndex < modules.length - 1 && (
+          <button
+            onClick={() => goTo(activeIndex + 1)}
+            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 w-10 h-10 rounded-full bg-white shadow-lg border border-gray-100 items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+          >
+            <ChevronRight size={20} className="text-gray-600" />
+          </button>
+        )}
+
+        {/* Scrollable slides */}
+        <div
+          ref={scrollRef}
+          className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-1"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
+          {modules.map((mod, mi) => (
+            <div
+              key={mod.id}
+              className="w-full shrink-0 snap-center px-1"
+            >
+              <div className={!mod.isFree ? 'opacity-70' : ''}>
+                <ModuleHeader module={mod} index={mi} />
+                <SerpentinePath lessons={mod.lessons} moduleIndex={mi} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Dots indicator */}
+      <div className="flex items-center justify-center gap-2 mt-2 mb-2">
+        {modules.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => goTo(i)}
+            className={`
+              rounded-full transition-all duration-300 cursor-pointer
+              ${i === activeIndex ? 'w-6 h-2 bg-primary' : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'}
+            `}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function LearningPath() {
   const { profile } = useAuth()
   const firstName = profile?.display_name?.split(' ')[0] || 'Apprenant'
-  const freeModules = mockModules.filter((m) => m.isFree)
-  const premiumModules = mockModules.filter((m) => !m.isFree)
 
   return (
     <div className="max-w-md mx-auto pb-28 md:pb-8">
@@ -383,24 +511,11 @@ export default function LearningPath() {
         <DailyGoal current={0} goal={20} />
       </motion.div>
 
-      {/* Free modules */}
-      {freeModules.map((mod, mi) => (
-        <div key={mod.id} className="mb-4">
-          <ModuleHeader module={mod} index={mi} />
-          <SerpentinePath lessons={mod.lessons} moduleIndex={mi} />
-        </div>
-      ))}
+      {/* Module carousel */}
+      <ModuleCarousel modules={mockModules} />
 
       {/* Premium banner */}
       <PremiumBanner />
-
-      {/* Premium modules (preview) */}
-      {premiumModules.map((mod, mi) => (
-        <div key={mod.id} className="mb-4 opacity-70">
-          <ModuleHeader module={mod} index={mi + freeModules.length} />
-          <SerpentinePath lessons={mod.lessons} moduleIndex={mi + freeModules.length} />
-        </div>
-      ))}
     </div>
   )
 }
