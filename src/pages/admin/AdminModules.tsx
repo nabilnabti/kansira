@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Pencil, Trash2, X } from 'lucide-react';
-import type { Module } from '../../types/database';
+import type { Module, Difficulty, AgeGroup } from '../../types/database';
 
 type Language = 'bambara' | 'soninke';
 
 const MOCK_MODULES: (Module & { lessons_count: number })[] = [
-  { id: '1', language_id: 'bambara', title: 'Salutations', description: 'Les bases des salutations en Bambara', icon: '👋', order_index: 1, is_free: true, is_published: true, created_at: '2025-01-01', lessons_count: 5 },
-  { id: '2', language_id: 'bambara', title: 'La famille', description: 'Vocabulaire de la famille', icon: '👨‍👩‍👧', order_index: 2, is_free: true, is_published: true, created_at: '2025-01-05', lessons_count: 4 },
-  { id: '3', language_id: 'bambara', title: 'Le marché', description: 'Acheter et vendre au marché', icon: '🛒', order_index: 3, is_free: false, is_published: true, created_at: '2025-01-10', lessons_count: 6 },
-  { id: '4', language_id: 'bambara', title: 'Les nombres', description: 'Compter en Bambara', icon: '🔢', order_index: 4, is_free: false, is_published: false, created_at: '2025-01-15', lessons_count: 3 },
-  { id: '5', language_id: 'soninke', title: 'Salutations', description: 'Les bases des salutations en Soninké', icon: '👋', order_index: 1, is_free: true, is_published: true, created_at: '2025-02-01', lessons_count: 5 },
-  { id: '6', language_id: 'soninke', title: 'La famille', description: 'Vocabulaire de la famille en Soninké', icon: '👨‍👩‍👧', order_index: 2, is_free: true, is_published: true, created_at: '2025-02-05', lessons_count: 4 },
-  { id: '7', language_id: 'soninke', title: 'La nourriture', description: 'Les aliments et la cuisine', icon: '🍲', order_index: 3, is_free: false, is_published: true, created_at: '2025-02-10', lessons_count: 3 },
+  { id: '1', language_id: 'bambara', title: 'Salutations', description: 'Les bases des salutations en Bambara', icon: '👋', order_index: 1, is_free: true, is_published: true, created_at: '2025-01-01', lessons_count: 5, difficulty: 'A1' as Difficulty, min_age_group: undefined },
+  { id: '2', language_id: 'bambara', title: 'La famille', description: 'Vocabulaire de la famille', icon: '👨‍👩‍👧', order_index: 2, is_free: true, is_published: true, created_at: '2025-01-05', lessons_count: 4, difficulty: 'A1' as Difficulty, min_age_group: undefined },
+  { id: '3', language_id: 'bambara', title: 'Le marché', description: 'Acheter et vendre au marché', icon: '🛒', order_index: 3, is_free: false, is_published: true, created_at: '2025-01-10', lessons_count: 6, difficulty: 'A2' as Difficulty, min_age_group: undefined },
+  { id: '4', language_id: 'bambara', title: 'Les nombres', description: 'Compter en Bambara', icon: '🔢', order_index: 4, is_free: false, is_published: false, created_at: '2025-01-15', lessons_count: 3, difficulty: 'A2' as Difficulty, min_age_group: undefined },
+  { id: '5', language_id: 'soninke', title: 'Salutations', description: 'Les bases des salutations en Soninké', icon: '👋', order_index: 1, is_free: true, is_published: true, created_at: '2025-02-01', lessons_count: 5, difficulty: 'A1' as Difficulty, min_age_group: undefined },
+  { id: '6', language_id: 'soninke', title: 'La famille', description: 'Vocabulaire de la famille en Soninké', icon: '👨‍👩‍👧', order_index: 2, is_free: true, is_published: true, created_at: '2025-02-05', lessons_count: 4, difficulty: 'A1' as Difficulty, min_age_group: undefined },
+  { id: '7', language_id: 'soninke', title: 'La nourriture', description: 'Les aliments et la cuisine', icon: '🍲', order_index: 3, is_free: false, is_published: true, created_at: '2025-02-10', lessons_count: 3, difficulty: 'A2' as Difficulty, min_age_group: undefined },
 ];
 
 interface ModuleForm {
@@ -23,6 +23,8 @@ interface ModuleForm {
   language_id: Language;
   is_free: boolean;
   is_published: boolean;
+  difficulty: Difficulty;
+  min_age_group: AgeGroup | '';
 }
 
 const emptyForm: ModuleForm = {
@@ -33,6 +35,8 @@ const emptyForm: ModuleForm = {
   language_id: 'bambara',
   is_free: false,
   is_published: false,
+  difficulty: 'A1' as Difficulty,
+  min_age_group: '' as AgeGroup | '',
 };
 
 export default function AdminModules() {
@@ -61,6 +65,8 @@ export default function AdminModules() {
       language_id: m.language_id as Language,
       is_free: m.is_free,
       is_published: m.is_published,
+      difficulty: m.difficulty,
+      min_age_group: (m.min_age_group || '') as AgeGroup | '',
     });
     setModalOpen(true);
   };
@@ -75,7 +81,7 @@ export default function AdminModules() {
     } else {
       setModules((prev) => [
         ...prev,
-        { ...form, id: crypto.randomUUID(), created_at: new Date().toISOString(), lessons_count: 0 },
+        { ...form, id: crypto.randomUUID(), created_at: new Date().toISOString(), lessons_count: 0, min_age_group: form.min_age_group || undefined },
       ]);
     }
     setModalOpen(false);
@@ -128,6 +134,8 @@ export default function AdminModules() {
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Leçons</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Gratuit</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Publié</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-500">Niveau</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-500 hidden lg:table-cell">Âge min</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Actions</th>
               </tr>
             </thead>
@@ -150,6 +158,14 @@ export default function AdminModules() {
                     <span className={`inline-flex px-2 py-0.5 rounded-full text-xs font-medium ${m.is_published ? 'bg-blue-100 text-blue-700' : 'bg-yellow-100 text-yellow-700'}`}>
                       {m.is_published ? 'Publié' : 'Brouillon'}
                     </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                      {m.difficulty}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-gray-600 hidden lg:table-cell">
+                    {m.min_age_group ? {'child': '3-6 ans', 'junior': '7-12 ans', 'teen': '13-17 ans', 'adult': '18+ ans'}[m.min_age_group] : '—'}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
@@ -249,6 +265,36 @@ export default function AdminModules() {
                     <option value="bambara">Bambara</option>
                     <option value="soninke">Soninké</option>
                   </select>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Niveau (CECRL)</label>
+                    <select
+                      value={form.difficulty}
+                      onChange={(e) => setForm({ ...form, difficulty: e.target.value as Difficulty })}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/30 focus:border-[#FF6B00]"
+                    >
+                      <option value="A1">A1 — Découverte</option>
+                      <option value="A2">A2 — Bases</option>
+                      <option value="B1">B1 — Intermédiaire</option>
+                      <option value="B2">B2 — Avancé</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Âge minimum</label>
+                    <select
+                      value={form.min_age_group}
+                      onChange={(e) => setForm({ ...form, min_age_group: e.target.value as AgeGroup | '' })}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/30 focus:border-[#FF6B00]"
+                    >
+                      <option value="">Tous les âges</option>
+                      <option value="child">3-6 ans</option>
+                      <option value="junior">7-12 ans</option>
+                      <option value="teen">13-17 ans</option>
+                      <option value="adult">18+ ans</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-6">

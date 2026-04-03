@@ -23,6 +23,7 @@ interface ModuleData {
   description: string
   isFree: boolean
   lang: 'bm' | 'snk'
+  difficulty: 'A1' | 'A2' | 'B1' | 'B2'
   lessons: LessonData[]
 }
 
@@ -35,6 +36,7 @@ const allModules: ModuleData[] = [
     description: 'Les salutations essentielles en Bambara',
     isFree: true,
     lang: 'bm',
+    difficulty: 'A1',
     lessons: [
       { id: 'l1', title: 'Dire bonjour', emoji: '👋', status: 'available' },
       { id: 'l2', title: 'Se présenter', emoji: '🙋', status: 'locked' },
@@ -50,6 +52,7 @@ const allModules: ModuleData[] = [
     description: 'Les membres de la famille',
     isFree: false,
     lang: 'bm',
+    difficulty: 'A1',
     lessons: [
       { id: 'l6', title: 'Les parents', emoji: '👨‍👩‍👧', status: 'premium_locked' },
       { id: 'l7', title: 'Frères et sœurs', emoji: '👫', status: 'premium_locked' },
@@ -65,6 +68,7 @@ const allModules: ModuleData[] = [
     description: 'Compter en Bambara',
     isFree: false,
     lang: 'bm',
+    difficulty: 'A2',
     lessons: [
       { id: 'l11', title: '1 à 5', emoji: '1️⃣', status: 'premium_locked' },
       { id: 'l12', title: '6 à 10', emoji: '🔟', status: 'premium_locked' },
@@ -80,6 +84,7 @@ const allModules: ModuleData[] = [
     description: 'Les aliments et les repas',
     isFree: false,
     lang: 'bm',
+    difficulty: 'A2',
     lessons: [
       { id: 'l16', title: 'Les fruits', emoji: '🥭', status: 'premium_locked' },
       { id: 'l17', title: 'Les légumes', emoji: '🥬', status: 'premium_locked' },
@@ -95,6 +100,7 @@ const allModules: ModuleData[] = [
     description: 'Les couleurs en Bambara',
     isFree: false,
     lang: 'bm',
+    difficulty: 'B1',
     lessons: [
       { id: 'l21', title: 'Rouge, bleu, jaune', emoji: '🔴', status: 'premium_locked' },
       { id: 'l22', title: 'Vert, orange, violet', emoji: '🟢', status: 'premium_locked' },
@@ -109,6 +115,7 @@ const allModules: ModuleData[] = [
     description: 'Les pièces et objets de la maison',
     isFree: false,
     lang: 'bm',
+    difficulty: 'B1',
     lessons: [
       { id: 'l25', title: 'Les pièces', emoji: '🚪', status: 'premium_locked' },
       { id: 'l26', title: 'Les meubles', emoji: '🪑', status: 'premium_locked' },
@@ -124,6 +131,7 @@ const allModules: ModuleData[] = [
     description: 'Les salutations essentielles en Soninké',
     isFree: true,
     lang: 'snk',
+    difficulty: 'A1',
     lessons: [
       { id: 'sl1', title: 'Dire bonjour', emoji: '👋', status: 'available' },
       { id: 'sl2', title: 'Se présenter', emoji: '🙋', status: 'locked' },
@@ -139,6 +147,7 @@ const allModules: ModuleData[] = [
     description: 'Les membres de la famille en Soninké',
     isFree: false,
     lang: 'snk',
+    difficulty: 'A1',
     lessons: [
       { id: 'sl6', title: 'Les parents', emoji: '👨‍👩‍👧', status: 'premium_locked' },
       { id: 'sl7', title: 'Frères et sœurs', emoji: '👫', status: 'premium_locked' },
@@ -154,6 +163,7 @@ const allModules: ModuleData[] = [
     description: 'Compter en Soninké',
     isFree: false,
     lang: 'snk',
+    difficulty: 'A2',
     lessons: [
       { id: 'sl11', title: '1 à 5', emoji: '1️⃣', status: 'premium_locked' },
       { id: 'sl12', title: '6 à 10', emoji: '🔟', status: 'premium_locked' },
@@ -169,6 +179,7 @@ const allModules: ModuleData[] = [
     description: 'Les aliments et les repas en Soninké',
     isFree: false,
     lang: 'snk',
+    difficulty: 'A2',
     lessons: [
       { id: 'sl16', title: 'Les fruits', emoji: '🥭', status: 'premium_locked' },
       { id: 'sl17', title: 'Les légumes', emoji: '🥬', status: 'premium_locked' },
@@ -183,6 +194,7 @@ const allModules: ModuleData[] = [
     description: 'Les animaux en Soninké',
     isFree: false,
     lang: 'snk',
+    difficulty: 'B1',
     lessons: [
       { id: 'sl20', title: 'Animaux domestiques', emoji: '🐔', status: 'premium_locked' },
       { id: 'sl21', title: 'Animaux sauvages', emoji: '🦁', status: 'premium_locked' },
@@ -381,6 +393,9 @@ function ModuleHeader({ module: mod, index }: { module: ModuleData; index: numbe
               <Crown size={10} /> Premium
             </span>
           )}
+          <span className="inline-flex items-center text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-full">
+            {mod.difficulty}
+          </span>
         </div>
         <p className="text-xs text-gray-400">
           {completedCount}/{mod.lessons.length} leçons

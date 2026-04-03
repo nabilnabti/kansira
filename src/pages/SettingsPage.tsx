@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Target, Globe, Volume2, Bell, LogOut, Settings } from 'lucide-react'
+import { Target, Globe, Volume2, Bell, LogOut, Settings, Flame, BookOpen, Star, TrendingUp } from 'lucide-react'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
 import { resetOnboarding } from './OnboardingPage'
@@ -43,13 +43,37 @@ function Toggle({
   )
 }
 
+const mockStats = {
+  totalXP: 0,
+  level: 1,
+  streak: 0,
+  lessonsCompleted: 0,
+}
+
+function MiniStat({ icon: Icon, value, label, color }: { icon: React.ElementType; value: string | number; label: string; color: string }) {
+  return (
+    <div className={`${color} rounded-2xl p-3 flex flex-col items-center justify-center text-center`}>
+      <Icon size={16} className="text-white/90 mb-1" />
+      <p className="text-lg font-extrabold text-white">{value}</p>
+      <p className="text-[10px] font-medium text-white/70">{label}</p>
+    </div>
+  )
+}
+
 export default function SettingsPage() {
-  const { activeLanguage, setActiveLanguage } = useLanguage()
-  const { signOut } = useAuth()
+  const { activeLanguage, setActiveLanguage, languageLabel } = useLanguage()
+  const { signOut, profile } = useAuth()
   const navigate = useNavigate()
   const [dailyGoal, setDailyGoal] = useState(20)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
+
+  const displayName = profile?.display_name || 'Utilisateur'
+  const initials = displayName
+    .split(' ')
+    .map((w: string) => w[0])
+    .join('')
+    .toUpperCase()
 
   return (
     <div className="max-w-lg mx-auto pb-28 md:max-w-2xl md:pb-8 px-4">
@@ -69,6 +93,31 @@ export default function SettingsPage() {
         animate="show"
         className="space-y-4"
       >
+        {/* Profile card — visible on mobile, hidden on desktop (has its own page) */}
+        <motion.div
+          variants={fadeUp}
+          className="bg-white rounded-2xl p-5 shadow-sm border border-[#131516]/5 md:hidden"
+        >
+          <div className="flex items-center gap-4 mb-4">
+            <div className="rounded-full p-[2px] bg-gradient-to-br from-[#FF6B00] via-[#F4A100] to-[#2D9F4F]">
+              <div className="w-14 h-14 rounded-full bg-[#FF6B00] flex items-center justify-center text-white text-lg font-extrabold ring-2 ring-white">
+                {initials}
+              </div>
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-bold text-lg text-[#131516] truncate">{displayName}</h2>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#2D9F4F] bg-[#2D9F4F]/10 px-2.5 py-0.5 rounded-full mt-1">
+                🇲🇱 {languageLabel}
+              </span>
+            </div>
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            <MiniStat icon={Star} value={mockStats.totalXP} label="XP" color="bg-[#FF6B00]" />
+            <MiniStat icon={TrendingUp} value={mockStats.level} label="Niveau" color="bg-[#2D9F4F]" />
+            <MiniStat icon={Flame} value={mockStats.streak} label="Série" color="bg-[#F4A100]" />
+            <MiniStat icon={BookOpen} value={mockStats.lessonsCompleted} label="Leçons" color="bg-[#131516]" />
+          </div>
+        </motion.div>
         {/* Daily goal */}
         <motion.div
           variants={fadeUp}

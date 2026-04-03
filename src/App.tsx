@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { AuthProvider } from './context/AuthContext'
+import { ChildModeProvider } from './context/ChildModeContext'
 import { LanguageProvider } from './context/LanguageContext'
 import { SoundProvider } from './context/SoundContext'
 import { ToastProvider } from './components/ui/Toast'
@@ -39,50 +40,52 @@ import AdminLayout from './components/layout/AdminLayout'
 export default function App() {
   return (
     <AuthProvider>
-      <LanguageProvider>
-        <SoundProvider>
-          <ToastProvider>
-            <PWAInstallBanner />
-            <AnimatePresence mode="wait">
-              <Routes>
-                {/* Smart home: landing (browser) or onboarding (PWA) */}
-                <Route path="/" element={<HomePage />} />
-                <Route path="/onboarding" element={<OnboardingPage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <ChildModeProvider>
+        <LanguageProvider>
+          <SoundProvider>
+            <ToastProvider>
+              <PWAInstallBanner />
+              <AnimatePresence mode="wait">
+                <Routes>
+                  {/* Smart home: landing (browser) or onboarding (PWA) */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/onboarding" element={<OnboardingPage />} />
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignupPage />} />
+                  <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-                {/* Protected app routes */}
-                <Route path="/app" element={<AuthGuard />}>
-                  <Route element={<AppShell />}>
-                    <Route index element={<DashboardPage />} />
-                    <Route path="profile" element={<ProfilePage />} />
-                    <Route path="badges" element={<BadgesPage />} />
-                    <Route path="settings" element={<SettingsPage />} />
-                    <Route path="premium" element={<PremiumPage />} />
-                    <Route path="stories" element={<StoriesPage />} />
-                    <Route path="themes" element={<AllThemesPage />} />
+                  {/* Protected app routes */}
+                  <Route path="/app" element={<AuthGuard />}>
+                    <Route element={<AppShell />}>
+                      <Route index element={<DashboardPage />} />
+                      <Route path="profile" element={<ProfilePage />} />
+                      <Route path="badges" element={<BadgesPage />} />
+                      <Route path="settings" element={<SettingsPage />} />
+                      <Route path="premium" element={<PremiumPage />} />
+                      <Route path="stories" element={<StoriesPage />} />
+                      <Route path="themes" element={<AllThemesPage />} />
+                    </Route>
+                    <Route path="lesson/:id" element={<LessonPage />} />
+                    <Route path="story/:id" element={<StoryReaderPage />} />
                   </Route>
-                  <Route path="lesson/:id" element={<LessonPage />} />
-                  <Route path="story/:id" element={<StoryReaderPage />} />
-                </Route>
 
-                {/* Admin routes */}
-                <Route path="/admin" element={<AdminGuard />}>
-                  <Route element={<AdminLayout />}>
-                    <Route index element={<AdminDashboard />} />
-                    <Route path="modules" element={<AdminModules />} />
-                    <Route path="lessons" element={<AdminLessons />} />
-                    <Route path="exercises/:id" element={<AdminExercises />} />
-                    <Route path="stories" element={<AdminStories />} />
-                    <Route path="users" element={<AdminUsers />} />
+                  {/* Admin routes */}
+                  <Route path="/admin" element={<AdminGuard />}>
+                    <Route element={<AdminLayout />}>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="modules" element={<AdminModules />} />
+                      <Route path="lessons" element={<AdminLessons />} />
+                      <Route path="exercises/:id" element={<AdminExercises />} />
+                      <Route path="stories" element={<AdminStories />} />
+                      <Route path="users" element={<AdminUsers />} />
+                    </Route>
                   </Route>
-                </Route>
-              </Routes>
-            </AnimatePresence>
-          </ToastProvider>
-        </SoundProvider>
-      </LanguageProvider>
+                </Routes>
+              </AnimatePresence>
+            </ToastProvider>
+          </SoundProvider>
+        </LanguageProvider>
+      </ChildModeProvider>
     </AuthProvider>
   )
 }

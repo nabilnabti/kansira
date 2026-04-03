@@ -63,6 +63,11 @@ export interface Database {
   }
 }
 
+export type AgeGroup = 'child' | 'junior' | 'teen' | 'adult'
+export type LearningGoal = 'family' | 'travel' | 'culture' | 'work'
+export type InitialLevel = 'beginner' | 'elementary' | 'intermediate' | 'advanced'
+export type Difficulty = 'A1' | 'A2' | 'B1' | 'B2'
+
 export interface Profile {
   id: string
   display_name: string | null
@@ -71,6 +76,10 @@ export interface Profile {
   preferred_lang: string
   daily_goal: number
   avatar_url: string | null
+  age_group: AgeGroup
+  learning_goal: LearningGoal
+  initial_level: InitialLevel
+  selected_languages: string[]
   created_at: string
   updated_at: string
 }
@@ -92,6 +101,8 @@ export interface Module {
   order_index: number
   is_free: boolean
   is_published: boolean
+  difficulty: Difficulty
+  min_age_group?: AgeGroup
   created_at: string
 }
 
@@ -102,6 +113,7 @@ export interface Lesson {
   description: string | null
   xp_reward: number
   order_index: number
+  difficulty: Difficulty
   created_at: string
 }
 

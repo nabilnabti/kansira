@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Home, Award, Crown, Settings, BookOpen } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import { useChildMode } from '../../context/ChildModeContext'
 
 interface TabItem {
   to: string
@@ -17,7 +18,7 @@ const tabs: TabItem[] = [
   { to: '/app/settings', label: 'Réglages', icon: Settings },
 ]
 
-function TabIcon({ tab, isActive }: { tab: TabItem; isActive: boolean }) {
+function TabIcon({ tab, isActive, isChildMode }: { tab: TabItem; isActive: boolean; isChildMode: boolean }) {
   const Icon = tab.icon
   return (
     <div className="relative flex flex-col items-center gap-0.5 py-1">
@@ -39,38 +40,42 @@ function TabIcon({ tab, isActive }: { tab: TabItem; isActive: boolean }) {
         transition={{ type: 'spring', stiffness: 400, damping: 20 }}
       >
         <div className={`
-          w-10 h-10 rounded-xl flex items-center justify-center transition-colors duration-200
+          ${isChildMode ? 'w-14 h-14' : 'w-10 h-10'} rounded-xl flex items-center justify-center transition-colors duration-200
           ${isActive ? 'bg-primary/10' : ''}
         `}>
           <Icon
-            size={22}
+            size={isChildMode ? 28 : 22}
             strokeWidth={isActive ? 2.5 : 1.5}
             className={isActive ? 'text-primary' : 'text-gray-400'}
           />
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {isActive ? (
-          <motion.span
-            initial={{ opacity: 0, y: 2 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 2 }}
-            className="text-[10px] font-bold text-primary"
-          >
-            {tab.label}
-          </motion.span>
-        ) : (
-          <span className="text-[10px] font-medium text-gray-400">
-            {tab.label}
-          </span>
-        )}
-      </AnimatePresence>
+      {!isChildMode && (
+        <AnimatePresence>
+          {isActive ? (
+            <motion.span
+              initial={{ opacity: 0, y: 2 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 2 }}
+              className="text-[10px] font-bold text-primary"
+            >
+              {tab.label}
+            </motion.span>
+          ) : (
+            <span className="text-[10px] font-medium text-gray-400">
+              {tab.label}
+            </span>
+          )}
+        </AnimatePresence>
+      )}
     </div>
   )
 }
 
 export default function BottomNav() {
+  const { isChildMode } = useChildMode()
+
   return (
     <nav className="md:hidden fixed bottom-4 left-4 right-4 z-50">
       <motion.div
@@ -87,7 +92,7 @@ export default function BottomNav() {
               end={tab.to === '/app'}
               className="flex-1 flex items-center justify-center"
             >
-              {({ isActive }) => <TabIcon tab={tab} isActive={isActive} />}
+              {({ isActive }) => <TabIcon tab={tab} isActive={isActive} isChildMode={isChildMode} />}
             </NavLink>
           ))}
         </div>

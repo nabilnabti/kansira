@@ -6,7 +6,7 @@ import {
   useCallback,
   type ReactNode,
 } from 'react'
-import type { Profile } from '../types/database'
+import type { Profile, AgeGroup, LearningGoal, InitialLevel } from '../types/database'
 
 // Minimal mock user type to replace Supabase's User
 interface MockUser {
@@ -23,7 +23,7 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  signUp: (email: string, password: string, displayName: string) => Promise<void>
+  signUp: (email: string, password: string, displayName: string, extras?: { age_group: AgeGroup; learning_goal: LearningGoal; initial_level: InitialLevel; selected_languages: string[] }) => Promise<void>
   signIn: (email: string, password: string) => Promise<void>
   signOut: () => Promise<void>
   resetPassword: (email: string) => Promise<void>
@@ -31,7 +31,12 @@ interface AuthContextValue extends AuthState {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
-function buildMockSession(email: string, displayName?: string) {
+function buildMockSession(email: string, displayName?: string, extras?: {
+  age_group: AgeGroup
+  learning_goal: LearningGoal
+  initial_level: InitialLevel
+  selected_languages: string[]
+}) {
   const mockUser: MockUser = {
     id: 'demo-user-001',
     email: email,
@@ -45,6 +50,10 @@ function buildMockSession(email: string, displayName?: string) {
     preferred_lang: 'bm',
     daily_goal: 20,
     avatar_url: null,
+    age_group: extras?.age_group || 'adult',
+    learning_goal: extras?.learning_goal || 'culture',
+    initial_level: extras?.initial_level || 'beginner',
+    selected_languages: extras?.selected_languages || ['bm'],
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   }
@@ -82,9 +91,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ user, profile }))
   }, [])
 
-  const signUp = async (email: string, _password: string, displayName: string) => {
+  const signUp = async (email: string, _password: string, displayName: string, extras?: {
+    age_group: AgeGroup
+    learning_goal: LearningGoal
+    initial_level: InitialLevel
+    selected_languages: string[]
+  }) => {
     await delay(800)
-    const { user, profile } = buildMockSession(email, displayName)
+    const { user, profile } = buildMockSession(email, displayName, extras)
     persistSession(user, profile)
     setState({ user, profile, loading: false })
   }

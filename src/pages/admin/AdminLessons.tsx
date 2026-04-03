@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Pencil, Trash2, X, ListChecks } from 'lucide-react';
+import type { Difficulty } from '../../types/database';
 
 interface MockLesson {
   id: string;
@@ -12,6 +13,7 @@ interface MockLesson {
   order_index: number;
   exercises_count: number;
   module_title: string;
+  difficulty: Difficulty;
 }
 
 const MOCK_MODULES = [
@@ -22,12 +24,12 @@ const MOCK_MODULES = [
 ];
 
 const MOCK_LESSONS: MockLesson[] = [
-  { id: 'l1', module_id: '1', title: 'Bonjour et au revoir', description: 'Apprenez les salutations de base', xp_reward: 15, order_index: 1, exercises_count: 6, module_title: 'Salutations (Bambara)' },
-  { id: 'l2', module_id: '1', title: 'Comment ça va ?', description: 'Demander et répondre sur la santé', xp_reward: 15, order_index: 2, exercises_count: 5, module_title: 'Salutations (Bambara)' },
-  { id: 'l3', module_id: '1', title: 'Se présenter', description: 'Dire son nom et son origine', xp_reward: 20, order_index: 3, exercises_count: 7, module_title: 'Salutations (Bambara)' },
-  { id: 'l4', module_id: '2', title: 'Les parents', description: 'Mère, père, frère, soeur', xp_reward: 15, order_index: 1, exercises_count: 5, module_title: 'La famille (Bambara)' },
-  { id: 'l5', module_id: '2', title: 'La famille élargie', description: 'Oncle, tante, cousin...', xp_reward: 20, order_index: 2, exercises_count: 6, module_title: 'La famille (Bambara)' },
-  { id: 'l6', module_id: '5', title: 'An maarenge', description: 'Les salutations de base en Soninké', xp_reward: 15, order_index: 1, exercises_count: 5, module_title: 'Salutations (Soninké)' },
+  { id: 'l1', module_id: '1', title: 'Bonjour et au revoir', description: 'Apprenez les salutations de base', xp_reward: 15, order_index: 1, exercises_count: 6, module_title: 'Salutations (Bambara)', difficulty: 'A1' as Difficulty },
+  { id: 'l2', module_id: '1', title: 'Comment ça va ?', description: 'Demander et répondre sur la santé', xp_reward: 15, order_index: 2, exercises_count: 5, module_title: 'Salutations (Bambara)', difficulty: 'A1' as Difficulty },
+  { id: 'l3', module_id: '1', title: 'Se présenter', description: 'Dire son nom et son origine', xp_reward: 20, order_index: 3, exercises_count: 7, module_title: 'Salutations (Bambara)', difficulty: 'A1' as Difficulty },
+  { id: 'l4', module_id: '2', title: 'Les parents', description: 'Mère, père, frère, soeur', xp_reward: 15, order_index: 1, exercises_count: 5, module_title: 'La famille (Bambara)', difficulty: 'A1' as Difficulty },
+  { id: 'l5', module_id: '2', title: 'La famille élargie', description: 'Oncle, tante, cousin...', xp_reward: 20, order_index: 2, exercises_count: 6, module_title: 'La famille (Bambara)', difficulty: 'A1' as Difficulty },
+  { id: 'l6', module_id: '5', title: 'An maarenge', description: 'Les salutations de base en Soninké', xp_reward: 15, order_index: 1, exercises_count: 5, module_title: 'Salutations (Soninké)', difficulty: 'A1' as Difficulty },
 ];
 
 interface LessonForm {
@@ -36,6 +38,7 @@ interface LessonForm {
   module_id: string;
   xp_reward: number;
   order_index: number;
+  difficulty: Difficulty;
 }
 
 const emptyForm: LessonForm = {
@@ -44,6 +47,7 @@ const emptyForm: LessonForm = {
   module_id: '1',
   xp_reward: 15,
   order_index: 1,
+  difficulty: 'A1' as Difficulty,
 };
 
 export default function AdminLessons() {
@@ -70,6 +74,7 @@ export default function AdminLessons() {
       module_id: l.module_id,
       xp_reward: l.xp_reward,
       order_index: l.order_index,
+      difficulty: l.difficulty,
     });
     setModalOpen(true);
   };
@@ -136,6 +141,7 @@ export default function AdminLessons() {
                 <th className="text-left px-4 py-3 font-medium text-gray-500 hidden md:table-cell">Module</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">XP</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Exercices</th>
+                <th className="text-left px-4 py-3 font-medium text-gray-500">Niveau</th>
                 <th className="text-left px-4 py-3 font-medium text-gray-500">Actions</th>
               </tr>
             </thead>
@@ -156,6 +162,11 @@ export default function AdminLessons() {
                     </span>
                   </td>
                   <td className="px-4 py-3 text-gray-600">{l.exercises_count}</td>
+                  <td className="px-4 py-3">
+                    <span className="inline-flex px-2 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-700">
+                      {l.difficulty}
+                    </span>
+                  </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
                       <Link
@@ -238,6 +249,20 @@ export default function AdminLessons() {
                     {MOCK_MODULES.map((m) => (
                       <option key={m.id} value={m.id}>{m.title}</option>
                     ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Niveau (CECRL)</label>
+                  <select
+                    value={form.difficulty}
+                    onChange={(e) => setForm({ ...form, difficulty: e.target.value as Difficulty })}
+                    className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#FF6B00]/30 focus:border-[#FF6B00]"
+                  >
+                    <option value="A1">A1 — Découverte</option>
+                    <option value="A2">A2 — Bases</option>
+                    <option value="B1">B1 — Intermédiaire</option>
+                    <option value="B2">B2 — Avancé</option>
                   </select>
                 </div>
 
