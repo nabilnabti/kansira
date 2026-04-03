@@ -567,7 +567,6 @@ function ModuleCarousel({ modules, onShowAll }: { modules: ModuleData[]; onShowA
 
   // Show max 3 tabs, then "all" button
   const visibleTabs = modules.slice(0, 3)
-  const hasMore = modules.length > 3
 
   return (
     <div className="relative">

@@ -73,15 +73,17 @@ export default function AdminModules() {
 
   const handleSave = () => {
     if (editingId) {
+      const { min_age_group: rawAgeEdit, ...restEdit } = form;
       setModules((prev) =>
         prev.map((m) =>
-          m.id === editingId ? { ...m, ...form } : m
+          m.id === editingId ? { ...m, ...restEdit, min_age_group: rawAgeEdit || undefined } : m
         )
       );
     } else {
+      const { min_age_group: rawAge, ...rest } = form;
       setModules((prev) => [
         ...prev,
-        { ...form, id: crypto.randomUUID(), created_at: new Date().toISOString(), lessons_count: 0, min_age_group: form.min_age_group || undefined },
+        { ...rest, min_age_group: rawAge || undefined, id: crypto.randomUUID(), created_at: new Date().toISOString(), lessons_count: 0 },
       ]);
     }
     setModalOpen(false);

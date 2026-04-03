@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Plus, Pencil, Trash2, X, Eye, ChevronDown, ChevronUp, GripVertical } from 'lucide-react'
+import { Plus, Pencil, Trash2, X, ChevronDown, ChevronUp, GripVertical } from 'lucide-react'
 import type { StoryData, StorySlide, StoryBackground } from '../../types/database'
 
 const MOCK_STORIES: StoryData[] = [

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, BookOpen, GraduationCap, Users, ArrowLeft, Menu, X, BookMarked, ChevronRight } from 'lucide-react'
+import { LayoutDashboard, BookOpen, GraduationCap, Users, ArrowLeft, Menu, X, BookMarked } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mascot } from '../ui/Mascot'
 
