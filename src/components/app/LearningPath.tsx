@@ -470,33 +470,30 @@ function StatsPills() {
 function LanguageSwitcher() {
   const { activeLanguage, setActiveLanguage } = useLanguage()
 
+  const languages = [
+    { code: 'bm' as const, label: 'Bambara', flag: '🇲🇱' },
+    { code: 'snk' as const, label: 'Soninké', flag: '🇲🇱' },
+  ]
+
   return (
-    <div className="flex items-center bg-white rounded-full p-1 shadow-sm border border-gray-100">
-      {([
-        { code: 'bm' as const, label: 'Bambara', flag: '🇲🇱' },
-        { code: 'snk' as const, label: 'Soninké', flag: '🇲🇱' },
-      ]).map((lang) => {
+    <div className="inline-flex items-center bg-white rounded-full p-1 shadow-sm border border-gray-100">
+      {languages.map((lang) => {
         const isActive = activeLanguage === lang.code
         return (
-          <motion.button
+          <button
             key={lang.code}
             onClick={() => setActiveLanguage(lang.code)}
-            whileTap={{ scale: 0.95 }}
             className={`
-              relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-semibold cursor-pointer transition-colors duration-200
-              ${isActive ? 'text-white' : 'text-gray-500 hover:text-gray-700'}
+              flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold cursor-pointer transition-all duration-200
+              ${isActive
+                ? 'bg-primary text-white shadow-md shadow-primary/25'
+                : 'text-gray-600 hover:bg-gray-50'
+              }
             `}
           >
-            {isActive && (
-              <motion.div
-                layoutId="langSwitch"
-                className="absolute inset-0 bg-primary rounded-full"
-                transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-              />
-            )}
-            <span className="relative z-10 text-xs">{lang.flag}</span>
-            <span className="relative z-10">{lang.label}</span>
-          </motion.button>
+            <span className="text-xs">{lang.flag}</span>
+            <span>{lang.label}</span>
+          </button>
         )
       })}
     </div>
