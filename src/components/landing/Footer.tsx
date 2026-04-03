@@ -103,7 +103,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-white/30">
-            &copy; 2024 Kan Sira. Tous droits reserves.
+            &copy; 2026 Kan Sira. Tous droits réservés.
           </p>
           <div className="flex items-center gap-1 text-sm text-white/30">
             Fait avec

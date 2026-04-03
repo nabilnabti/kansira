@@ -77,7 +77,42 @@ export default function Hero() {
               <span className="text-primary">gratuite</span>,{" "}
               <span className="text-secondary">fun</span> et{" "}
               <span className="text-gold">efficace</span>{" "}
-              pour apprendre le Bambara et le Soninké !
+              pour apprendre le{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">Bambara</span>
+                <motion.span
+                  className="absolute left-[-4px] right-[-4px] top-[10%] bottom-[5%] rounded-sm bg-primary/20"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: [0, 1, 1, 0] }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                    ease: "easeInOut",
+                    times: [0, 0.35, 0.7, 1],
+                  }}
+                  style={{ originX: 0, transformOrigin: "left" }}
+                />
+              </span>{" "}
+              et le{" "}
+              <span className="relative inline-block">
+                <span className="relative z-10">Soninké</span>
+                <motion.span
+                  className="absolute left-[-4px] right-[-4px] top-[10%] bottom-[5%] rounded-sm bg-secondary/20"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: [0, 1, 1, 0] }}
+                  transition={{
+                    duration: 3.5,
+                    repeat: Infinity,
+                    repeatDelay: 1,
+                    ease: "easeInOut",
+                    times: [0, 0.35, 0.7, 1],
+                    delay: 1.7,
+                  }}
+                  style={{ originX: 0, transformOrigin: "left" }}
+                />
+              </span>{" "}
+              !
             </motion.h1>
 
             <motion.div
