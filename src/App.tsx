@@ -21,6 +21,7 @@ import BadgesPage from './pages/BadgesPage'
 import SettingsPage from './pages/SettingsPage'
 import PremiumPage from './pages/PremiumPage'
 import StoriesPage from './pages/StoriesPage'
+import AllThemesPage from './pages/AllThemesPage'
 import StoryReaderPage from './pages/StoryReaderPage'
 
 // Admin pages
@@ -29,6 +30,7 @@ import AdminModules from './pages/admin/AdminModules'
 import AdminLessons from './pages/admin/AdminLessons'
 import AdminExercises from './pages/admin/AdminExercises'
 import AdminUsers from './pages/admin/AdminUsers'
+import AdminStories from './pages/admin/AdminStories'
 
 // Layouts
 import AppShell from './components/layout/AppShell'
@@ -59,6 +61,7 @@ export default function App() {
                     <Route path="settings" element={<SettingsPage />} />
                     <Route path="premium" element={<PremiumPage />} />
                     <Route path="stories" element={<StoriesPage />} />
+                    <Route path="themes" element={<AllThemesPage />} />
                   </Route>
                   <Route path="lesson/:id" element={<LessonPage />} />
                   <Route path="story/:id" element={<StoryReaderPage />} />
@@ -71,6 +74,7 @@ export default function App() {
                     <Route path="modules" element={<AdminModules />} />
                     <Route path="lessons" element={<AdminLessons />} />
                     <Route path="exercises/:id" element={<AdminExercises />} />
+                    <Route path="stories" element={<AdminStories />} />
                     <Route path="users" element={<AdminUsers />} />
                   </Route>
                 </Route>

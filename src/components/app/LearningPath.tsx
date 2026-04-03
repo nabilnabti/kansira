@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Crown, Lock, Check, Play, ChevronRight, ChevronLeft, Flame, Star, BarChart3, Grid3X3, X } from 'lucide-react'
+import { Crown, Lock, Check, Play, ChevronRight, ChevronLeft, Flame, Star, BarChart3, Grid3X3 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { Mascot } from '../ui/Mascot'
@@ -500,92 +500,7 @@ function LanguageSwitcher() {
   )
 }
 
-function AllThemesModal({
-  modules,
-  onClose,
-  onSelect,
-}: {
-  modules: ModuleData[]
-  onClose: () => void
-  onSelect: (index: number) => void
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end md:items-center justify-center"
-      onClick={onClose}
-    >
-      <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
-        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-        onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-t-3xl md:rounded-3xl w-full max-w-lg max-h-[80vh] overflow-hidden flex flex-col"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between px-5 pt-5 pb-3">
-          <h2 className="text-lg font-bold text-dark">Tous les thèmes</h2>
-          <button
-            onClick={onClose}
-            className="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
-          >
-            <X size={18} className="text-gray-500" />
-          </button>
-        </div>
-
-        {/* Grid */}
-        <div className="flex-1 overflow-y-auto px-5 pb-5">
-          <div className="grid grid-cols-2 gap-3">
-            {modules.map((mod, i) => {
-              const completedCount = mod.lessons.filter((l) => l.status === 'completed').length
-              const totalCount = mod.lessons.length
-              return (
-                <motion.button
-                  key={mod.id}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.04 }}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={() => {
-                    onSelect(i)
-                    onClose()
-                  }}
-                  className={`
-                    flex flex-col items-center gap-2 p-4 rounded-2xl border-2 cursor-pointer transition-colors text-center
-                    ${!mod.isFree ? 'border-amber-200/60 bg-amber-50/30' : 'border-gray-100 bg-white hover:border-primary/30'}
-                  `}
-                >
-                  <span className="text-3xl">{mod.icon}</span>
-                  <span className="text-sm font-bold text-dark leading-tight">{mod.title}</span>
-                  <div className="flex items-center gap-1">
-                    {!mod.isFree && <Crown size={10} className="text-amber-500" />}
-                    <span className="text-xs text-gray-400">
-                      {completedCount}/{totalCount} leçons
-                    </span>
-                  </div>
-                  {/* Mini progress */}
-                  <div className="w-full h-1 rounded-full bg-gray-100 overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-secondary"
-                      style={{ width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%` }}
-                    />
-                  </div>
-                </motion.button>
-              )
-            })}
-          </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  )
-}
-
-function ModuleCarousel({ modules, onShowAll, goToIndex }: { modules: ModuleData[]; onShowAll: () => void; goToIndex?: number | null }) {
+function ModuleCarousel({ modules, onShowAll }: { modules: ModuleData[]; onShowAll: () => void }) {
   const [activeIndex, setActiveIndex] = useState(0)
   const scrollRef = useRef<HTMLDivElement>(null)
   const isScrolling = useRef(false)
@@ -630,13 +545,6 @@ function ModuleCarousel({ modules, onShowAll, goToIndex }: { modules: ModuleData
       clearTimeout(timer)
     }
   }, [activeIndex, modules.length])
-
-  // Navigate when goToIndex changes (from modal selection)
-  useEffect(() => {
-    if (goToIndex != null && goToIndex >= 0 && goToIndex < modules.length) {
-      scrollToIndex(goToIndex)
-    }
-  }, [goToIndex, modules.length, scrollToIndex])
 
   const goTo = (index: number) => {
     if (index >= 0 && index < modules.length) scrollToIndex(index)
@@ -742,24 +650,11 @@ function ModuleCarousel({ modules, onShowAll, goToIndex }: { modules: ModuleData
 export default function LearningPath() {
   const { profile } = useAuth()
   const { activeLanguage } = useLanguage()
+  const navigate = useNavigate()
   const firstName = profile?.display_name?.split(' ')[0] || 'Apprenant'
-  const [showAllThemes, setShowAllThemes] = useState(false)
-  const [carouselGoTo, setCarouselGoTo] = useState<number | null>(null)
 
   // Filter modules by active language
   const modules = allModules.filter((m) => m.lang === activeLanguage)
-
-  const handleSelectFromModal = (index: number) => {
-    setCarouselGoTo(index)
-  }
-
-  // Reset carouselGoTo after it's consumed
-  useEffect(() => {
-    if (carouselGoTo !== null) {
-      const t = setTimeout(() => setCarouselGoTo(null), 100)
-      return () => clearTimeout(t)
-    }
-  }, [carouselGoTo])
 
   return (
     <div className="max-w-md mx-auto pb-28 md:max-w-none md:pb-8">
@@ -874,8 +769,7 @@ export default function LearningPath() {
         >
           <ModuleCarousel
             modules={modules}
-            onShowAll={() => setShowAllThemes(true)}
-            goToIndex={carouselGoTo}
+            onShowAll={() => navigate('/app/themes')}
             key={activeLanguage}
           />
         </motion.div>
@@ -886,16 +780,6 @@ export default function LearningPath() {
         <PremiumBanner />
       </div>
 
-      {/* All themes modal */}
-      <AnimatePresence>
-        {showAllThemes && (
-          <AllThemesModal
-            modules={modules}
-            onClose={() => setShowAllThemes(false)}
-            onSelect={handleSelectFromModal}
-          />
-        )}
-      </AnimatePresence>
     </div>
   )
 }

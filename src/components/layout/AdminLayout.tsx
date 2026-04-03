@@ -1,24 +1,35 @@
-import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, GraduationCap, Users, ArrowLeft, Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react'
+import { NavLink, Outlet } from 'react-router-dom'
+import { LayoutDashboard, BookOpen, GraduationCap, Users, ArrowLeft, Menu, X, BookMarked, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mascot } from '../ui/Mascot'
 
 const navItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
   { to: '/admin/modules', icon: BookOpen, label: 'Modules', end: false },
   { to: '/admin/lessons', icon: GraduationCap, label: 'Leçons', end: false },
+  { to: '/admin/stories', icon: BookMarked, label: 'Histoires', end: false },
   { to: '/admin/users', icon: Users, label: 'Utilisateurs', end: false },
-];
+]
 
 export default function AdminLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const sidebarContent = (
     <nav className="flex flex-col h-full">
-      <div className="px-6 py-6">
-        <h1 className="text-xl font-bold text-[#131516]">Kan Sira Admin</h1>
+      {/* Logo */}
+      <div className="px-5 py-5 flex items-center gap-3">
+        <Mascot size={36} expression="happy" />
+        <div>
+          <h1 className="text-base font-bold text-white leading-tight">Kan Sira</h1>
+          <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider">Admin</span>
+        </div>
       </div>
 
+      {/* Divider */}
+      <div className="mx-4 mb-3 border-t border-white/10" />
+
+      {/* Nav links */}
       <div className="flex-1 px-3 space-y-1">
         {navItems.map((item) => (
           <NavLink
@@ -27,10 +38,10 @@ export default function AdminLayout() {
             end={item.end}
             onClick={() => setSidebarOpen(false)}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
                 isActive
-                  ? 'bg-[#FF6B00]/10 text-[#FF6B00]'
-                  : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                  ? 'bg-white/15 text-white shadow-sm'
+                  : 'text-white/60 hover:bg-white/8 hover:text-white/90'
               }`
             }
           >
@@ -40,22 +51,26 @@ export default function AdminLayout() {
         ))}
       </div>
 
-      <div className="px-3 pb-6">
+      {/* Back to app */}
+      <div className="px-3 pb-5">
         <NavLink
           to="/app"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-colors"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/40 hover:bg-white/8 hover:text-white/70 transition-all duration-200"
         >
           <ArrowLeft className="w-5 h-5" />
           Retour à l'app
         </NavLink>
       </div>
     </nav>
-  );
+  )
 
   return (
-    <div className="flex h-screen bg-[#FFF3E0]/30">
+    <div className="flex h-screen bg-gray-50">
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex w-60 flex-shrink-0 flex-col bg-white border-r border-gray-200">
+      <aside
+        className="hidden lg:flex w-[250px] flex-shrink-0 flex-col"
+        style={{ background: 'linear-gradient(180deg, #1A1A2E 0%, #16213E 100%)' }}
+      >
         {sidebarContent}
       </aside>
 
@@ -71,17 +86,18 @@ export default function AdminLayout() {
               onClick={() => setSidebarOpen(false)}
             />
             <motion.aside
-              initial={{ x: -240 }}
+              initial={{ x: -250 }}
               animate={{ x: 0 }}
-              exit={{ x: -240 }}
+              exit={{ x: -250 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="fixed inset-y-0 left-0 w-60 bg-white z-50 lg:hidden shadow-xl"
+              className="fixed inset-y-0 left-0 w-[250px] z-50 lg:hidden shadow-2xl"
+              style={{ background: 'linear-gradient(180deg, #1A1A2E 0%, #16213E 100%)' }}
             >
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="absolute top-4 right-4 p-1 rounded-lg hover:bg-gray-100"
+                className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-white/10 transition-colors"
               >
-                <X className="w-5 h-5 text-gray-500" />
+                <X className="w-5 h-5 text-white/60" />
               </button>
               {sidebarContent}
             </motion.aside>
@@ -91,15 +107,21 @@ export default function AdminLayout() {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Mobile header */}
-        <header className="lg:hidden flex items-center gap-3 px-4 py-3 bg-white border-b border-gray-200">
+        {/* Top header */}
+        <header className="flex items-center gap-3 px-4 md:px-8 py-4 bg-white border-b border-gray-100">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 rounded-lg hover:bg-gray-100"
+            className="lg:hidden p-2 rounded-xl hover:bg-gray-100 transition-colors"
           >
             <Menu className="w-5 h-5 text-gray-600" />
           </button>
-          <h1 className="text-lg font-bold text-[#131516]">Kan Sira Admin</h1>
+          <div className="flex-1">
+            <h1 className="text-lg font-bold text-[#131516] lg:hidden">Kan Sira Admin</h1>
+          </div>
+          {/* Breadcrumb placeholder on desktop */}
+          <div className="hidden lg:flex items-center gap-2 text-sm text-gray-400">
+            <span>Administration</span>
+          </div>
         </header>
 
         <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
@@ -107,5 +129,5 @@ export default function AdminLayout() {
         </main>
       </div>
     </div>
-  );
+  )
 }
