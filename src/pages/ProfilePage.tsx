@@ -60,7 +60,7 @@ export default function ProfilePage() {
   const langEmoji = activeLanguage === 'bm' ? '🇲🇱' : '🇲🇱'
 
   return (
-    <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
+    <div className="max-w-lg mx-auto pb-28 md:max-w-none md:pb-8 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -70,40 +70,44 @@ export default function ProfilePage() {
         <h1 className="text-2xl font-bold text-[#131516]">Profil</h1>
       </motion.div>
 
-      {/* Avatar + info */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className="flex flex-col items-center mb-8"
-      >
-        {/* Avatar with gradient border */}
-        <div className="rounded-full p-[3px] bg-gradient-to-br from-[#FF6B00] via-[#F4A100] to-[#2D9F4F] mb-4">
-          <div className="w-20 h-20 rounded-full bg-[#FF6B00] flex items-center justify-center text-white text-2xl font-extrabold ring-4 ring-white">
-            {initials}
-          </div>
-        </div>
-
-        <h2 className="font-bold text-xl text-[#131516]">{displayName}</h2>
-        <p className="text-sm text-[#131516]/50 mt-0.5">{email}</p>
-
-        {/* Language pill */}
-        <motion.span
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.25 }}
-          className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#2D9F4F]/10 px-4 py-1.5 text-sm font-semibold text-[#2D9F4F]"
+      {/* Desktop: side by side layout */}
+      <div className="md:flex md:gap-8 md:items-start">
+        {/* Avatar + info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="flex flex-col items-center mb-8 md:mb-0 md:bg-white md:rounded-2xl md:p-8 md:shadow-sm md:border md:border-gray-100 md:min-w-[260px]"
         >
-          {langEmoji} {languageLabel}
-        </motion.span>
-      </motion.div>
+          {/* Avatar with gradient border */}
+          <div className="rounded-full p-[3px] bg-gradient-to-br from-[#FF6B00] via-[#F4A100] to-[#2D9F4F] mb-4">
+            <div className="w-20 h-20 rounded-full bg-[#FF6B00] flex items-center justify-center text-white text-2xl font-extrabold ring-4 ring-white">
+              {initials}
+            </div>
+          </div>
 
+          <h2 className="font-bold text-xl text-[#131516]">{displayName}</h2>
+          <p className="text-sm text-[#131516]/50 mt-0.5">{email}</p>
+
+          {/* Language pill */}
+          <motion.span
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.25 }}
+            className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#2D9F4F]/10 px-4 py-1.5 text-sm font-semibold text-[#2D9F4F]"
+          >
+            {langEmoji} {languageLabel}
+          </motion.span>
+        </motion.div>
+
+        {/* Right column on desktop */}
+        <div className="md:flex-1">
       {/* Stats grid */}
       <motion.div
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-2 gap-3 mb-8"
+        className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8"
       >
         <StatCard
           icon={Star}
@@ -161,6 +165,8 @@ export default function ProfilePage() {
           Panneau admin &rarr;
         </Link>
       </motion.div>
+        </div>{/* end right column */}
+      </div>{/* end desktop flex */}
     </div>
   )
 }

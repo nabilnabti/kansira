@@ -52,7 +52,7 @@ export default function SettingsPage() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true)
 
   return (
-    <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
+    <div className="max-w-lg mx-auto pb-28 md:max-w-2xl md:pb-8 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}

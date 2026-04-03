@@ -38,7 +38,7 @@ export default function BadgesPage() {
   const [selectedBadge, setSelectedBadge] = useState<Badge | null>(null)
 
   return (
-    <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
+    <div className="max-w-lg mx-auto pb-28 md:max-w-none md:pb-8 px-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -66,7 +66,7 @@ export default function BadgesPage() {
         variants={stagger}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-3 gap-3"
+        className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
       >
         {mockBadges.map((badge) => (
           <motion.button

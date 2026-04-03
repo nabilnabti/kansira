@@ -196,7 +196,7 @@ const allModules: ModuleData[] = [
 const wavePattern = [0, 50, 70, 50, 0, -50, -70, -50]
 
 function SerpentinePath({ lessons, moduleIndex }: { lessons: LessonData[]; moduleIndex: number }) {
-  // Build SVG path connecting the nodes
+  // Build SVG path connecting the nodes — vertical on mobile
   const nodeSpacing = 100
   const centerX = 160
 
@@ -208,7 +208,6 @@ function SerpentinePath({ lessons, moduleIndex }: { lessons: LessonData[]; modul
     }
   })
 
-  // Build a smooth curve through the points
   let pathD = `M ${points[0].x} ${points[0].y}`
   for (let i = 1; i < points.length; i++) {
     const prev = points[i - 1]
@@ -220,46 +219,60 @@ function SerpentinePath({ lessons, moduleIndex }: { lessons: LessonData[]; modul
   const totalHeight = 40 + (lessons.length - 1) * nodeSpacing + 40
 
   return (
-    <div className="relative" style={{ height: totalHeight }}>
-      {/* SVG curved path line */}
-      <svg
-        className="absolute inset-0 w-full pointer-events-none"
-        style={{ height: totalHeight }}
-        viewBox={`0 0 320 ${totalHeight}`}
-        preserveAspectRatio="xMidYMid meet"
-      >
-        <motion.path
-          d={pathD}
-          fill="none"
-          stroke="#E5E7EB"
-          strokeWidth="3"
-          strokeDasharray="8 6"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
-        />
-      </svg>
+    <>
+      {/* Mobile: vertical serpentine */}
+      <div className="relative md:hidden" style={{ height: totalHeight }}>
+        <svg
+          className="absolute inset-0 w-full pointer-events-none"
+          style={{ height: totalHeight }}
+          viewBox={`0 0 320 ${totalHeight}`}
+          preserveAspectRatio="xMidYMid meet"
+        >
+          <motion.path
+            d={pathD}
+            fill="none"
+            stroke="#E5E7EB"
+            strokeWidth="3"
+            strokeDasharray="8 6"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 1.5, ease: 'easeOut' }}
+          />
+        </svg>
 
-      {/* Lesson nodes */}
-      {lessons.map((lesson, i) => {
-        const offset = wavePattern[(i + moduleIndex * 3) % wavePattern.length]
-        const xPercent = ((centerX + offset) / 320) * 100
+        {lessons.map((lesson, i) => {
+          const offset = wavePattern[(i + moduleIndex * 3) % wavePattern.length]
+          const xPercent = ((centerX + offset) / 320) * 100
+          return (
+            <div
+              key={lesson.id}
+              className="absolute"
+              style={{
+                left: `${xPercent}%`,
+                top: 40 + i * nodeSpacing,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <LessonNode lesson={lesson} index={i} />
+            </div>
+          )
+        })}
+      </div>
 
-        return (
-          <div
-            key={lesson.id}
-            className="absolute"
-            style={{
-              left: `${xPercent}%`,
-              top: 40 + i * nodeSpacing,
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            <LessonNode lesson={lesson} index={i} />
-          </div>
-        )
-      })}
-    </div>
+      {/* Desktop: horizontal path using flexbox for proper centering */}
+      <div className="hidden md:flex md:justify-center md:items-center md:py-6">
+        <div className="flex items-center gap-4">
+          {lessons.map((lesson, i) => (
+            <div key={lesson.id} className="flex items-center">
+              <LessonNode lesson={lesson} index={i} />
+              {i < lessons.length - 1 && (
+                <div className="w-12 lg:w-16 h-[3px] bg-gray-200 rounded-full ml-4" style={{ backgroundImage: 'repeating-linear-gradient(90deg, #E5E7EB 0, #E5E7EB 8px, transparent 8px, transparent 14px)' }} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -351,7 +364,7 @@ function ModuleHeader({ module: mod, index }: { module: ModuleData; index: numbe
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 * index }}
-      className="flex items-center gap-3 mb-1 px-1"
+      className="flex items-center gap-3 mb-1 px-1 md:justify-center"
     >
       <div
         className={`w-11 h-11 rounded-2xl flex items-center justify-center text-lg ${
@@ -377,7 +390,7 @@ function ModuleHeader({ module: mod, index }: { module: ModuleData; index: numbe
   )
 }
 
-function PremiumBanner() {
+function PremiumBanner({ compact }: { compact?: boolean } = {}) {
   const navigate = useNavigate()
 
   return (
@@ -385,7 +398,7 @@ function PremiumBanner() {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 0.3 }}
-      className="relative overflow-hidden rounded-3xl p-5 text-white shadow-xl my-8 mx-1"
+      className={`relative overflow-hidden rounded-3xl text-white shadow-xl ${compact ? 'p-4' : 'p-5 my-8 mx-1'}`}
       style={{
         background: 'linear-gradient(135deg, #FF6B00 0%, #E85D00 50%, #D44800 100%)',
       }}
@@ -393,23 +406,24 @@ function PremiumBanner() {
       {/* Decorative circles */}
       <div className="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10" />
       <div className="absolute -right-4 -bottom-10 w-24 h-24 rounded-full bg-white/5" />
-      <div className="absolute left-4 -bottom-6 w-16 h-16 rounded-full bg-white/5" />
 
       <div className="relative z-10">
         <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-10 h-10 rounded-2xl bg-white/20 flex items-center justify-center">
-            <Crown size={22} className="text-white" />
+          <div className={`${compact ? 'w-8 h-8' : 'w-10 h-10'} rounded-2xl bg-white/20 flex items-center justify-center`}>
+            <Crown size={compact ? 18 : 22} className="text-white" />
           </div>
-          <h3 className="font-extrabold text-lg">Kan Sira Premium</h3>
+          <h3 className={`font-extrabold ${compact ? 'text-base' : 'text-lg'}`}>Kan Sira Premium</h3>
         </div>
 
-        <div className="space-y-1.5 mb-4 ml-1">
+        <div className={`space-y-1 ${compact ? 'mb-3' : 'mb-4'} ml-1`}>
           <p className="text-[13px] text-white/80 flex items-center gap-2">
             <Check size={14} strokeWidth={3} /> 100+ leçons interactives
           </p>
-          <p className="text-[13px] text-white/80 flex items-center gap-2">
-            <Check size={14} strokeWidth={3} /> 10 modules complets
-          </p>
+          {!compact && (
+            <p className="text-[13px] text-white/80 flex items-center gap-2">
+              <Check size={14} strokeWidth={3} /> 10 modules complets
+            </p>
+          )}
           <p className="text-[13px] text-white/80 flex items-center gap-2">
             <Check size={14} strokeWidth={3} /> Badges et certifications
           </p>
@@ -435,7 +449,7 @@ function StatsPills() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.15 }}
-      className="flex items-center justify-center gap-3 mb-5"
+      className="flex items-center justify-center md:justify-start gap-3 mb-5 md:mb-0"
     >
       <div className="flex items-center gap-1.5 bg-white rounded-full px-3.5 py-2 shadow-sm border border-gray-100">
         <Flame size={16} className="text-[#E63946]" />
@@ -638,7 +652,7 @@ function ModuleCarousel({ modules, onShowAll, goToIndex }: { modules: ModuleData
   return (
     <div className="relative">
       {/* Module tab bar + "Tous" button */}
-      <div className="flex items-center gap-2 mb-4 px-1 overflow-x-auto scrollbar-hide">
+      <div className="flex items-center gap-2 mb-4 px-1 overflow-x-auto scrollbar-hide md:justify-center">
         {visibleTabs.map((mod, i) => {
           const isActive = i === activeIndex
           return (
@@ -751,12 +765,42 @@ export default function LearningPath() {
   }, [carouselGoTo])
 
   return (
-    <div className="max-w-md mx-auto pb-28 md:pb-8">
-      {/* Welcome + language switcher */}
+    <div className="max-w-md mx-auto pb-28 md:max-w-none md:pb-8">
+      {/* Desktop top bar: welcome + language switcher + stats */}
+      <div className="hidden md:flex items-center justify-between gap-6 mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="flex items-center gap-4"
+        >
+          <motion.div
+            initial={{ scale: 0, rotate: -20 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 15, delay: 0.1 }}
+          >
+            <Mascot size={64} expression="waving" />
+          </motion.div>
+          <div>
+            <h1 className="text-2xl font-extrabold text-[#131516]">
+              Bonjour {firstName} !
+            </h1>
+            <p className="text-sm text-gray-500 mt-0.5">
+              Prêt pour votre leçon ?
+            </p>
+          </div>
+        </motion.div>
+
+        <div className="flex items-center gap-4">
+          <StatsPills />
+          <LanguageSwitcher />
+        </div>
+      </div>
+
+      {/* Mobile: welcome section */}
       <motion.div
         initial={{ opacity: 0, y: -15 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center gap-4 mb-4 px-1"
+        className="md:hidden flex items-center gap-4 mb-4 px-1"
       >
         <motion.div
           initial={{ scale: 0, rotate: -20 }}
@@ -785,25 +829,39 @@ export default function LearningPath() {
         </div>
       </motion.div>
 
-      {/* Language switcher */}
+      {/* Mobile: language switcher */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.15 }}
-        className="flex justify-center mb-4"
+        className="md:hidden flex justify-center mb-4"
       >
         <LanguageSwitcher />
       </motion.div>
 
-      {/* Stats pills */}
-      <StatsPills />
+      {/* Mobile: stats pills */}
+      <div className="md:hidden">
+        <StatsPills />
+      </div>
 
-      {/* Daily goal */}
+      {/* Desktop: Daily goal + Premium banner side by side */}
+      <div className="hidden md:grid md:grid-cols-2 gap-4 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <DailyGoal current={0} goal={20} />
+        </motion.div>
+        <PremiumBanner compact />
+      </div>
+
+      {/* Mobile: Daily goal */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="mb-7 px-1"
+        className="md:hidden mb-7 px-1"
       >
         <DailyGoal current={0} goal={20} />
       </motion.div>
@@ -826,8 +884,10 @@ export default function LearningPath() {
         </motion.div>
       </AnimatePresence>
 
-      {/* Premium banner */}
-      <PremiumBanner />
+      {/* Mobile: Premium banner */}
+      <div className="md:hidden">
+        <PremiumBanner />
+      </div>
 
       {/* All themes modal */}
       <AnimatePresence>

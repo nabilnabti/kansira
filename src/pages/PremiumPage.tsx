@@ -24,7 +24,7 @@ export default function PremiumPage() {
   const navigate = useNavigate()
 
   return (
-    <div className="max-w-lg mx-auto pb-28 md:pb-8 px-4">
+    <div className="max-w-lg mx-auto pb-28 md:max-w-3xl md:pb-8 px-4">
       {/* Hero */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
